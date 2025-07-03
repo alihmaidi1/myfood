@@ -8,8 +8,7 @@ public static class Extentions
     {
         MigrateDatabaseAsync<TContext>(app.ApplicationServices).GetAwaiter().GetResult();
 
-        SeedDataAsync(app.ApplicationServices).GetAwaiter().GetResult();
-
+    
         return app;
     }    
 
@@ -22,15 +21,5 @@ public static class Extentions
         await context.Database.MigrateAsync();
     }
     
-    
-    private static async Task SeedDataAsync(IServiceProvider serviceProvider)
-    {
-        using var scope = serviceProvider.CreateScope();
-        var seeders = scope.ServiceProvider.GetServices<IDataSeeder>();
-        foreach (var seeder in seeders)
-        {
-            await seeder.SeedAllAsync();
-        }
-    }
     
 }

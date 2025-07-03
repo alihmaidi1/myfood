@@ -24,7 +24,7 @@ public static class DependencyInjection
         );
         services.AddScoped<GlobalExceptionHandlingMiddleware>();
         services.AddValidatorsFromAssemblies(assemblies);
-        services.AddCarterWithAssemblies(assemblies);
+        // services.AddCarterWithAssemblies(assemblies);
         services.AddLimitRate();
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
@@ -39,7 +39,7 @@ public static class DependencyInjection
     public static WebApplication UseShared(this WebApplication app)
     {
         app.UseRateLimiter();
-        app.MapCarter();
+        // app.MapCarter();
         app.UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/openapi/v1.json", "");

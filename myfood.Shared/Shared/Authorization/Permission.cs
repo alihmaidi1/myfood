@@ -1,4 +1,4 @@
-namespace Identity.Domain.Enum;
+namespace Shared.Authorization;
 
 public enum Permission
 {
