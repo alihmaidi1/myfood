@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
+      <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
     </ItemGroup>
 
 </Project>
