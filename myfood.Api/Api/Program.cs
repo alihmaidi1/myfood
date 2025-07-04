@@ -14,6 +14,7 @@ var identityModule = typeof(Identity.Application.DependencyInjection).Assembly;
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
 builder.Services.AddShared(builder.Configuration,identityModule);
 builder.Services.AddIdentityModules(builder.Configuration);
 var app = builder.Build();
@@ -24,7 +25,7 @@ app.UseShared()
     .UseIdentityModule();
 
 
-
+app.MapControllers();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.Run();

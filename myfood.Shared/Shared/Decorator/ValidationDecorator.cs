@@ -15,7 +15,7 @@ public static class ValidationDecorator
             {
                 return await innerHandler.Handle(request, cancellationToken);
             }
-            return Result.ValidationFailure(Error.ValidationFailures(validationFailures)).ToJsonResult();
+            return Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToJsonResult();
 
         }
     }
@@ -32,7 +32,7 @@ public static class ValidationDecorator
             {
                 return await innerHandler.Handle(request, cancellationToken);
             }
-            return  Result.ValidationFailure(Error.ValidationFailures(validationFailures)).ToJsonResult();
+            return  Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToJsonResult();
     
         }
     }

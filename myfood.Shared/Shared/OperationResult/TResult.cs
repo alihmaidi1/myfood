@@ -2,16 +2,15 @@ namespace Shared.OperationResult;
 
 public class TResult<TValue>: Result
 {
-    private readonly TValue? _value;
 
-    public TResult(TValue? value, bool isSuccess, Error error,HttpStatusCode statusCode)
-        : base(isSuccess, error,statusCode)
+    public TResult(TValue? value, bool isSuccess,HttpStatusCode statusCode, Error? error=null)
+        : base(isSuccess,statusCode, error)
     {
-        _value = value;
+        Value = value;
     }
 
-    public TValue Value { get; }
-    public static implicit operator TResult<TValue>(TValue? value) => Create(value);
+    public TValue? Value { get; }
+    public static implicit operator TResult<TValue>(TValue? value)=> Create(value);
 
 
 

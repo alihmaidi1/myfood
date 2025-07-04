@@ -5,12 +5,8 @@ public static class ResultOperation
 {
     public static JsonResult ToJsonResult(this Result operationTResult)
     {
-        var options = new JsonSerializerOptions
-        {
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            WriteIndented = false 
-        };
-        return new JsonResult(operationTResult,options)
+        
+        return new JsonResult(operationTResult)
         {
 
             StatusCode = (int)operationTResult.StatusCode,

@@ -3,14 +3,14 @@ namespace Shared.OperationResult;
 
 public class Result
 {
-    public Result(bool isSuccess, Error error,HttpStatusCode statusCode)
+    public Result(bool isSuccess,HttpStatusCode statusCode, Error? error=null)
     {
-        if (isSuccess && error != Error.None)
+        if (isSuccess && error != null)
         {
             throw new InvalidOperationException();
         }
 
-        if (!isSuccess && error == Error.None)
+        if (!isSuccess && error == null)
         {
             throw new InvalidOperationException();
         }
@@ -25,23 +25,24 @@ public class Result
 
     public bool IsFailure => !IsSuccess;
 
-    public Error Error { get; }
+    public Error? Error { get; }
 
-    public static Result Success() => new(true, Error.None,HttpStatusCode.OK);
 
-    public static Result Failure(Error error,HttpStatusCode statusCode) => new(false, error,statusCode);
+    public static TResult<TValue> Failure<TValue>(Error error,HttpStatusCode statusCode) => new(default, false,statusCode, error);
 
-    public static TResult<TValue> Success<TValue>(TValue? value) => new(value, true, Error.None,HttpStatusCode.OK);
 
-    // public static TResult<TValue> Failure<TValue>(Error error,HttpStatusCode statusCode) => new(default, false, error,statusCode);
-
-    public static TResult<TValue> ValidationFailure<TValue>(Error error) => new(default, false, error,HttpStatusCode.UnprocessableContent);
-
-    public static Result ValidationFailure(Error error) => new(false, error,HttpStatusCode.UnprocessableContent);
-    public static Result InternalFailure(Error error) => new(false, error,HttpStatusCode.InternalServerError);
     
-    public static TResult<TValue> InternalFailure<TValue>(Error error) => new(default, false, error,HttpStatusCode.InternalServerError);
-    public static TResult<TValue> Create<TValue>(TValue? value) =>
+    public static TResult<TValue?> Success<TValue>(TValue? value) => new(value, true, HttpStatusCode.OK);
+
+
+    
+    
+    public static TResult<TValue?> ValidationFailure<TValue>(Error error)=> new(default, false, HttpStatusCode.UnprocessableContent,error);
+
+    public static TResult<TValue?> InternalFailure<TValue>(Error error)=> new(default, false,HttpStatusCode.InternalServerError, error);
+    
+    
+    public static TResult<TValue?> Create<TValue>(TValue? value) =>
         value is not null ? Success(value) : InternalFailure<TValue>(Error.NullValue);
 
 

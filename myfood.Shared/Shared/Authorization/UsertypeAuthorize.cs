@@ -18,7 +18,7 @@ public class UsertypeAuthorize: AuthorizeAttribute, IAuthorizationFilter
         var userType=context.HttpContext.User.Claims.FirstOrDefault(c => c.Type=="UserType")?.Value;
         if (userType!=_userType.ToString())
         {
-            context.Result = Result.Failure(Error.InvalidUserType,HttpStatusCode.Forbidden).ToJsonResult();
+            context.Result = Result.Failure<object>(Error.InvalidUserType,HttpStatusCode.Forbidden).ToJsonResult();
 
         }
     }

@@ -22,7 +22,6 @@
     <ItemGroup>
       <Folder Include="Auth\Admin\" />
       <Folder Include="Auth\Cooker\" />
-      <Folder Include="Auth\User\Command\Login\" />
       <Folder Include="Auth\User\Query\" />
     </ItemGroup>
 

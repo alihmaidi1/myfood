@@ -2,7 +2,6 @@ namespace Shared.OperationResult;
 
 public class Error: IEquatable<Error>
 {
-    public static readonly Error None = new Error(string.Empty,string.Empty);
     
     public static readonly Error NullValue = new Error("Error.NullValue","The Speified result value is null");
 
