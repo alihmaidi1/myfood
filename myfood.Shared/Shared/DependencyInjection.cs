@@ -1,6 +1,7 @@
 using Carter;
 using Shared.Extensions;
 using Shared.Security;
+using Shared.Security.Jwt;
 using Shared.Versioning;
 
 namespace Shared;
@@ -23,10 +24,23 @@ public static class DependencyInjection
                 .WithScopedLifetime()
         
         );
+        
+        
+        
+        
+        
+        services.AddOptions<JwtSetting>()
+            
+            .BindConfiguration("Jwt")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services.AddScoped<GlobalExceptionHandlingMiddleware>();
         services.AddValidatorsFromAssemblies(assemblies);
         services.AddCarterWithAssemblies(assemblies);
         services.AddLimitRate();
+        services.AddJwtConfiguration(configuration);
+        
+        
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
         services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator.QueryHandler<>));
@@ -45,7 +59,9 @@ public static class DependencyInjection
         {
             options.SwaggerEndpoint("/openapi/v1.json", "");
         
-        });    
+        });
+        app.UseAuthentication()
+            .UseAuthorization();
         return app;
     }
 

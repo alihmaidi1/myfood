@@ -1,3 +1,4 @@
+using Api.JwtConfiguration;
 using Identity.Application;
 using Serilog;
 using Shared;
@@ -8,14 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
 
-var identityModule = typeof(Identity.Application.DependencyInjection).Assembly;
+var allAssembly = AppDomain.CurrentDomain.GetAssemblies();
 
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-builder.Services.AddControllers();
-builder.Services.AddShared(builder.Configuration,identityModule);
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+
+});
+
+
+builder.Services.AddShared(builder.Configuration,allAssembly);
 builder.Services.AddIdentityModules(builder.Configuration);
 var app = builder.Build();
 
@@ -25,7 +31,6 @@ app.UseShared()
     .UseIdentityModule();
 
 
-app.MapControllers();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.Run();

@@ -10,6 +10,9 @@ public class Error: IEquatable<Error>
     public static readonly Error InvalidApiKey = new Error("Error.InvalidApiKey","The specified api key is invalid");
     public static readonly Error MissingApiKey=  new Error("Error.MissingApiKey","The specified API key is missing");
     
+    public static readonly Error InvalidCredential=  new Error("Error.InvalidCredential","Your credentials are invalid");
+    
+    
     public static  Error ValidationFailures(string error) =>new Error("Error.ValidationFailures",error);
     public static  Error NotFound(string message) => new Error("Error.NotFound",message);
     

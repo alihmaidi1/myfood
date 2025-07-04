@@ -19,7 +19,7 @@ public class LoginUserEndPoint: ICarterModule
                 })
             .Produces<string>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("Add Item Into Basket")
-            .WithDescription("Add Item Into Basket");
+            .WithSummary("login user to website")
+            .WithDescription("login user to website");
     }
 }
