@@ -10,7 +10,7 @@ public class TResult<TValue>: Result
     }
 
     public TValue? Value { get; }
-    public static implicit operator TResult<TValue>(TValue? value)=> Create(value);
+    // public static implicit operator IResult(TValue? value)=> Create(value);
 
 
 

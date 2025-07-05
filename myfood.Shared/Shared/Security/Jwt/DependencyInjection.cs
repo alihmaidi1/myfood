@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Shared.Security.Jwt;
@@ -11,11 +12,14 @@ public static class DependencyInjection
     {
         var jwtOption = Configuration.GetSection("Jwt");
         
+        
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
+            options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
+                
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
@@ -31,8 +35,14 @@ public static class DependencyInjection
         
         
         });
+        services.AddAuthorization(options =>
+        {
 
-        services.AddAuthorization();
+            options.DefaultPolicy=new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build();
+            
+        });
         return services;
     }
     

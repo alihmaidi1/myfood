@@ -1,24 +1,34 @@
 
+using Microsoft.AspNetCore.Http.HttpResults;
+
 namespace Shared.OperationResult;
 
 public static class ResultOperation
 {
-    public static JsonResult ToJsonResult(this Result operationTResult)
-    {
+    // public static IResult ToJsonResult(this Result operationTResult)
+    // {
+
+        // Results.Problem(new ProblemDetails()
+        // {
+        //     Status = (int)HttpStatusCode.Accepted,
+        //     
+        //
+        // });
         
-        return new JsonResult(operationTResult)
-        {
+        
+        // switch (operationTResult.StatusCode)
+        // {
+        //     case HttpStatusCode.OK:
+        //         // return Results.
+        // }
+    //     return null;
+    // }
 
-            StatusCode = (int)operationTResult.StatusCode,
-                        
 
-        };
-
-    }
-
-
-    public static async Task<JsonResult> ToJsonResultAsync(this Task<Result> operationResult)     {
-
-        return (await operationResult).ToJsonResult();
-    }
+    // public static async Task<IResult> ToJsonResultAsync(this Task<Result> operationResult)
+    // {
+    //
+    //     return null;
+        // return (await operationResult).ToJsonResult();
+    // }
 }

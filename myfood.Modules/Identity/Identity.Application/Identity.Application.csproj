@@ -22,6 +22,8 @@
     <ItemGroup>
       <Folder Include="Auth\Admin\" />
       <Folder Include="Auth\Cooker\" />
+      <Folder Include="Auth\User\Command\ForgetPassword\" />
+      <Folder Include="Auth\User\Command\Logout\" />
       <Folder Include="Auth\User\Query\" />
     </ItemGroup>
 

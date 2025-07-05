@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
 namespace Shared.Authorization;
@@ -20,8 +22,8 @@ public class PermissionProvider:IAuthorizationPolicyProvider
         if (permissions.Contains(policyName))
         {
             
-            var policy = new AuthorizationPolicyBuilder();
-        
+            var policy = new AuthorizationPolicyBuilder(IdentityConstants.BearerScheme);
+            
             policy.AddRequirements(new PermissionRequirement(policyName));
             return Task.FromResult(policy.Build());
                 

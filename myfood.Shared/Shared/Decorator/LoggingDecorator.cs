@@ -10,7 +10,7 @@ public class LoggingDecorator
     {
 
 
-        public async Task<JsonResult> Handle(TCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(TCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("[START] Handle request={Request} - RequestData={RequestData}",
                 typeof(TCommand).Name, request);
@@ -36,7 +36,7 @@ public class LoggingDecorator
     public sealed class QueryHandler<TQuery>(IQueryHandler<TQuery> innerHandler,ILogger<QueryHandler<TQuery>> logger) : IQueryHandler<TQuery>
         where TQuery : IQuery 
     {
-        public async Task<JsonResult> Handle(TQuery request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(TQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("[START] Handle request={Request} - RequestData={RequestData}",
                 typeof(TQuery).Name, request);

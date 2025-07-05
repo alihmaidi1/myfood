@@ -1,4 +1,5 @@
-using Identity.Domain.Repositories;
+using Identity.Domain.Security;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Authorization;
@@ -19,29 +20,29 @@ public class LoginUserHandler: ICommandHandler<LoginUserRequest>
 
     }
     
-    public async Task<JsonResult> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         var user=await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
         {
             
-            return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid.")).ToJsonResult();
+            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid."));
         }
 
         if (!user.EmailConfirmed)
         {
-            return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("your email is not confirmed")).ToJsonResult();
+            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("your email is not confirmed"));
             
         }
         var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!passwordValid)
         {
-            return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid.")).ToJsonResult();
+            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid."));
             
         }
 
-        var result = await _jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Customer);
+        var result = await _jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Customer,cancellationToken);
         
-        return Result.Success(result).ToJsonResult();
+        return Result.SuccessResult(result);
     }
 }

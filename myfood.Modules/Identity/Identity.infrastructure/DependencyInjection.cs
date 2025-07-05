@@ -1,5 +1,5 @@
-using Identity.Domain.Repositories;
 using Identity.Domain.Security;
+using Identity.infrastructure.Repositories;
 using Identity.infrastructure.Repositories.Jwt;
 using Identity.infrastructure.Seed;
 using Microsoft.AspNetCore.Builder;
@@ -19,12 +19,18 @@ public static class DependencyInjection
 
 
         services.AddScoped<IJwtRepository, JwtRepository>();
-        services.AddIdentity<User,Role>(option =>
+        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddIdentityCore<User>(option =>
             {
                 option.SignIn.RequireConfirmedAccount = true;
+                
             
             
-            }).AddEntityFrameworkStores<myFoodDbContext>()
+            })
+            .AddRoles<Role>()
+            .AddEntityFrameworkStores<myFoodDbContext>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
         services.AddDbContext<myFoodDbContext>(option =>

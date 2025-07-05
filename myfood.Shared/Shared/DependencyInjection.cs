@@ -2,6 +2,7 @@ using Carter;
 using Shared.Extensions;
 using Shared.Security;
 using Shared.Security.Jwt;
+using Shared.Services.User;
 using Shared.Versioning;
 
 namespace Shared;
@@ -12,6 +13,10 @@ public static class DependencyInjection
     public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration configuration,
         params Assembly[] assemblies)
     {
+
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserService,CurrentUserService>();
 
         services.AddVersioning();
         services.Scan(scan =>
@@ -30,10 +35,11 @@ public static class DependencyInjection
         
         
         services.AddOptions<JwtSetting>()
-            
             .BindConfiguration("Jwt")
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        
+        
         services.AddScoped<GlobalExceptionHandlingMiddleware>();
         services.AddValidatorsFromAssemblies(assemblies);
         services.AddCarterWithAssemblies(assemblies);
@@ -53,15 +59,18 @@ public static class DependencyInjection
 
     public static WebApplication UseShared(this WebApplication app)
     {
-        app.UseRateLimiter();
-        app.MapCarter();
+        // app.UseRateLimiter();
+
+        app.UseAuthentication();
+        // app.UseAuthorization();
+        
         app.UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/openapi/v1.json", "");
         
         });
-        app.UseAuthentication()
-            .UseAuthorization();
+        app.MapCarter();
+
         return app;
     }
 

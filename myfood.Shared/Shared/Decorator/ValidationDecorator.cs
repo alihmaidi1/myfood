@@ -8,14 +8,14 @@ public static class ValidationDecorator
     {
 
 
-        public async Task<JsonResult> Handle(TCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(TCommand request, CancellationToken cancellationToken)
         {
             var validationFailures = await ValidateAsync(request, validators);
             if (validationFailures == null)
             {
                 return await innerHandler.Handle(request, cancellationToken);
             }
-            return Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToJsonResult();
+            return Result.ValidationFailureResult<object>(Error.ValidationFailures(validationFailures));
 
         }
     }
@@ -25,14 +25,14 @@ public static class ValidationDecorator
     IEnumerable<IValidator<TQuery>> validators) : IQueryHandler<TQuery>
     where TQuery : IQuery 
     {
-        public async Task<JsonResult> Handle(TQuery request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(TQuery request, CancellationToken cancellationToken)
         {
             var validationFailures = await ValidateAsync(request, validators);
             if (validationFailures == null)
             {
                 return await innerHandler.Handle(request, cancellationToken);
             }
-            return  Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToJsonResult();
+            return  Result.ValidationFailureResult<object>(Error.ValidationFailures(validationFailures));
     
         }
     }

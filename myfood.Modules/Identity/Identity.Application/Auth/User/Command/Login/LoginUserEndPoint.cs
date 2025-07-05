@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Shared.Contract.CQRS;
+using Shared.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
@@ -15,9 +16,9 @@ public class LoginUserEndPoint: ICarterModule
                 async ([FromBody]  LoginUserRequest request,ICommandHandler<LoginUserRequest> handler,CancellationToken cancellationToken) =>
                 {
                     var result=await handler.Handle(request, cancellationToken);
-                    return result.Value;
+                    return result;
                 })
-            .Produces<string>(StatusCodes.Status201Created)
+            .Produces<TResult<LoginUserResponse>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("login user to website")
             .WithDescription("login user to website");

@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Identity.Domain.Repositories;
 using Identity.Domain.Security;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -23,13 +22,19 @@ public class JwtRepository: IJwtRepository
         _context=context;
     }
     
-    public async Task<TokenInfo> GetTokensInfo(Guid id,string email,UserType type,List<string>? permissions=null)  
+    public async Task<TokenInfo> GetTokensInfo(Guid id,string email,UserType type,CancellationToken cancellationToken,List<string>? permissions=null)  
     {
         
            
         string token = GetToken(id,email,type,permissions);
         string refreshToken = GenerateRefreshToken();
-
+        _context.RefreshTokens.Add(new RefreshToken()
+        {
+            
+            Value = refreshToken
+        });
+        await _context.SaveChangesAsync(cancellationToken);
+        
         return new TokenInfo
         {
             Token = token,

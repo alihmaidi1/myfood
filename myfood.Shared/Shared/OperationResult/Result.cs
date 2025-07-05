@@ -34,13 +34,17 @@ public class Result
     
     public static TResult<TValue?> Success<TValue>(TValue? value) => new(value, true, HttpStatusCode.OK);
 
+    public static IResult SuccessResult<TValue>(TValue? value) => Results.Ok(new TResult<TValue>(value, true, HttpStatusCode.OK));
 
     
     
     public static TResult<TValue?> ValidationFailure<TValue>(Error error)=> new(default, false, HttpStatusCode.UnprocessableContent,error);
 
+    public static IResult ValidationFailureResult<TValue>(Error error)=> Results.UnprocessableEntity(new TResult<TValue>(default, false, HttpStatusCode.UnprocessableContent,error));
+    
     public static TResult<TValue?> InternalFailure<TValue>(Error error)=> new(default, false,HttpStatusCode.InternalServerError, error);
     
+    public static IResult InternalFailureResult<TValue>(Error error)=> Results.InternalServerError(new TResult<TValue>(default, false,HttpStatusCode.InternalServerError, error));
     
     public static TResult<TValue?> Create<TValue>(TValue? value) =>
         value is not null ? Success(value) : InternalFailure<TValue>(Error.NullValue);

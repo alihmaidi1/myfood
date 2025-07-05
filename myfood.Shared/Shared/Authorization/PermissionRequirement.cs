@@ -10,6 +10,7 @@ public class PermissionRequirement: IAuthorizationRequirement
     public PermissionRequirement(string Permission)
     {
         this.Permission = Permission;
+        
 
     }
     
