@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Application", "myf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.infrastructure", "myfood.Modules\Identity\Identity.infrastructure\Identity.infrastructure.csproj", "{C792E0F0-29D7-438A-B493-CE17DEBE385F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{BC623213-32E1-43CC-ADD7-6E36D074A771}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "myfood.Modules\Common\Common\Common.csproj", "{CF4BC291-9AC1-45D3-8E38-1196DAAD5565}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,8 @@ Global
 		{0C64A27D-3670-428A-8DCE-3ED3E3CB5F95} = {DA28DEBC-3230-46CD-88F1-B6FD703A9A46}
 		{5023B2D1-48A1-4C0E-BF62-9A456E11BBF8} = {DA28DEBC-3230-46CD-88F1-B6FD703A9A46}
 		{C792E0F0-29D7-438A-B493-CE17DEBE385F} = {DA28DEBC-3230-46CD-88F1-B6FD703A9A46}
+		{BC623213-32E1-43CC-ADD7-6E36D074A771} = {36241FFF-EA31-4B90-A658-76DE24769413}
+		{CF4BC291-9AC1-45D3-8E38-1196DAAD5565} = {BC623213-32E1-43CC-ADD7-6E36D074A771}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{90F2A820-6703-4066-BA53-3EA7ACEEBB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -66,5 +72,9 @@ Global
 		{C792E0F0-29D7-438A-B493-CE17DEBE385F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C792E0F0-29D7-438A-B493-CE17DEBE385F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C792E0F0-29D7-438A-B493-CE17DEBE385F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4BC291-9AC1-45D3-8E38-1196DAAD5565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4BC291-9AC1-45D3-8E38-1196DAAD5565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4BC291-9AC1-45D3-8E38-1196DAAD5565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4BC291-9AC1-45D3-8E38-1196DAAD5565}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

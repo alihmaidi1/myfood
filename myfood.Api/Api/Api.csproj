@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\myfood.Modules\Common\Common\Common.csproj" />
       <ProjectReference Include="..\..\myfood.Modules\Identity\Identity.Application\Identity.Application.csproj" />
     </ItemGroup>
 

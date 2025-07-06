@@ -2,6 +2,7 @@ using Carter;
 using Shared.Extensions;
 using Shared.Security;
 using Shared.Security.Jwt;
+using Shared.Services.File;
 using Shared.Services.User;
 using Shared.Versioning;
 
@@ -17,7 +18,7 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService,CurrentUserService>();
-
+        services.AddScoped<IAwsStorageService,AwsStorageService>();
         services.AddVersioning();
         services.Scan(scan =>
             scan.FromAssemblies(assemblies)
@@ -39,6 +40,11 @@ public static class DependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
         
+        
+        services.AddOptions<AwsS3Setting>()
+            .BindConfiguration("AwsS3")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         
         services.AddScoped<GlobalExceptionHandlingMiddleware>();
         services.AddValidatorsFromAssemblies(assemblies);

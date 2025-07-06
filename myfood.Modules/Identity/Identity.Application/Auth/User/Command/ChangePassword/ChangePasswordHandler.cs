@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Shared.Contract.CQRS;
 using Shared.Services.User;
 

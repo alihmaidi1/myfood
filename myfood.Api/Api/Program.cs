@@ -16,8 +16,6 @@ builder.Host.UseSerilog((context, config) =>
 builder.Services.AddControllers();
 var allAssembly = AppDomain.CurrentDomain.GetAssemblies();
 
-var jwtOption = builder.Configuration.GetSection("Jwt");
-
 
 // Add services to the container. 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

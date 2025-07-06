@@ -32,7 +32,7 @@ public class Result
 
 
     
-    public static TResult<TValue?> Success<TValue>(TValue? value) => new(value, true, HttpStatusCode.OK);
+    public static TResult<TValue> Success<TValue>(TValue? value) => new(value, true, HttpStatusCode.OK);
 
     public static IResult SuccessResult<TValue>(TValue? value) => Results.Ok(new TResult<TValue>(value, true, HttpStatusCode.OK));
 
