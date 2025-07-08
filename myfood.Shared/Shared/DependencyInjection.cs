@@ -1,9 +1,14 @@
 using Carter;
+
+using Refit;
 using Shared.Extensions;
 using Shared.Security;
 using Shared.Security.Jwt;
+using Shared.Services.Email;
 using Shared.Services.File;
+using Shared.Services.Twilio;
 using Shared.Services.User;
+using Shared.Services.Whatsapp;
 using Shared.Versioning;
 
 namespace Shared;
@@ -19,6 +24,10 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService,CurrentUserService>();
         services.AddScoped<IAwsStorageService,AwsStorageService>();
+        services.AddScoped<IWhatsAppService, WhatsAppService>();
+        services.AddScoped<ISmsTwilioService,SmsTwilioService>();
+        services.AddScoped<IMailService, MailService>();
+        
         services.AddVersioning();
         services.Scan(scan =>
             scan.FromAssemblies(assemblies)
@@ -32,8 +41,17 @@ public static class DependencyInjection
         );
         
         
+        services.AddRefitClient<IWhatsAppCloudApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["WhatsApp:BaseUrl"]!))
+            .AddPolicyHandler(PollyExtensions.GetTimeOutPolicy(100))
+            .AddPolicyHandler(c=>PollyExtensions.GetRetryPolicy());
+
         
         
+        services.AddOptions<WhatsappMessageSetting>()
+            .BindConfiguration("Whatsapp")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         
         services.AddOptions<JwtSetting>()
             .BindConfiguration("Jwt")
@@ -41,11 +59,22 @@ public static class DependencyInjection
             .ValidateOnStart();
         
         
+        
+        services.AddOptions<TwilioSmsSetting>()
+            .BindConfiguration("Twilio")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        
         services.AddOptions<AwsS3Setting>()
             .BindConfiguration("AwsS3")
             .ValidateDataAnnotations()
             .ValidateOnStart();
         
+        
+        services.AddOptions<MailSetting>()
+            .BindConfiguration("Email")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services.AddScoped<GlobalExceptionHandlingMiddleware>();
         services.AddValidatorsFromAssemblies(assemblies);
         services.AddCarterWithAssemblies(assemblies);

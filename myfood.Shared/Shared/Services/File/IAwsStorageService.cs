@@ -13,4 +13,7 @@ public interface IAwsStorageService
 
     public Task CompleteMultipartUploadAsync(string uploadId, string fileName, List<Amazon.S3.Model.PartETag> partETags);
 
+
+    public Task AbortMultipartUploadAsync(string uploadId, string fileName);
+
 }

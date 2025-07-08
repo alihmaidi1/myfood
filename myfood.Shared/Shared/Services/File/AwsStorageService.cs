@@ -76,4 +76,17 @@ public class AwsStorageService: IAwsStorageService
 
         await _s3Client.CompleteMultipartUploadAsync(request);
     }
+
+    public async Task AbortMultipartUploadAsync(string uploadId, string fileName)
+    {
+        var request = new AbortMultipartUploadRequest
+        {
+            BucketName = _settings.BucketName,
+            Key = fileName,
+            UploadId = uploadId
+        };
+
+        await _s3Client.AbortMultipartUploadAsync(request);
+        
+    }
 }

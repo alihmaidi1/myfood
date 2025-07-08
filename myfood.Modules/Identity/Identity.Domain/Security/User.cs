@@ -16,7 +16,7 @@ public class User: IdentityUser<Guid>, IEntity
     public UserType UserType { get; set; }=UserType.Customer;
 
 
-
+    public string? ForgetCode { get; set; }
 
     public string CreatedBy { get; set; } = "";
     public DateTime CreatedAt { get; set; }=DateTime.Now;
