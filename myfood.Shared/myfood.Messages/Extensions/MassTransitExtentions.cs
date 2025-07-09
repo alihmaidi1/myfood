@@ -20,7 +20,7 @@ public static class MassTransitExtentions
             config.AddConsumers(assemblies);
             // config.AddSagaStateMachines(assemblies);
             // config.AddSagas(assemblies);
-            // config.AddActivities(assemblies);
+            config.AddActivities(assemblies);
             
             config.UsingInMemory((context, configurator) =>configurator.ConfigureEndpoints(context));
             

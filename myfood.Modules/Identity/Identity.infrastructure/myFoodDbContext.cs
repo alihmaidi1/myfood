@@ -2,6 +2,7 @@ using System.Reflection;
 using Identity.Domain.Security;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using myfood.Messages.Outbox;
 using Shared.Services.Archive;
 
 namespace Identity.infrastructure;
@@ -26,7 +27,7 @@ public class myFoodDbContext: IdentityDbContext<User,Role,Guid>
     }
     
     public DbSet<ArchiveRecord>  ArchiveRecords { get; init; }
-    
+    public DbSet<OutboxMessage> OutboxMessages { get; init; }
     public DbSet<RefreshToken> RefreshTokens { get; init; }
 
 }

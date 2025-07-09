@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using myfood.Messages.Outbox;
 using Shared.Services.Archive;
 
 namespace Identity.infrastructure;
@@ -40,7 +41,8 @@ public static class DependencyInjection
             option.EnableSensitiveDataLogging();
 
         });
-        
+
+        services.AddHostedService<OutboxProcessor<myFoodDbContext>>();
         return services;
     }
     

@@ -3,6 +3,7 @@ using Api.JwtConfiguration;
 using Identity.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using myfood.Messages.Extensions;
 using Serilog;
 using Shared;
 using Shared.Middleware;
@@ -27,6 +28,7 @@ builder.Services.AddOpenApi(options =>
 
 
 builder.Services.AddShared(builder.Configuration,allAssembly);
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
 builder.Services.AddIdentityModules(builder.Configuration);
 var app = builder.Build();
 
