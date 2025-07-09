@@ -8,7 +8,7 @@ using Shared.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
-public class LoginUserHandler: ICommandHandler<LoginUserRequest>
+public class LoginUserHandler: ICommandHandler<LoginUserCommand>
 {
     
     private readonly UserManager<Domain.Security.User>  _userManager;
@@ -20,7 +20,7 @@ public class LoginUserHandler: ICommandHandler<LoginUserRequest>
 
     }
     
-    public async Task<IResult> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var user=await _userManager.FindByEmailAsync(request.Email);
         if (user == null)

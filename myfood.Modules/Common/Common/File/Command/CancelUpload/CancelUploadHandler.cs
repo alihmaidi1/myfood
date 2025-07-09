@@ -5,7 +5,7 @@ using Shared.Services.File;
 
 namespace Common.File.Command.CancelUpload;
 
-public class CancelUploadHandler: ICommandHandler<CancelUploadRequest>
+public class CancelUploadHandler: ICommandHandler<CancelUploadCommand>
 {
 
     private readonly IAwsStorageService  _awsStorageService;
@@ -15,7 +15,7 @@ public class CancelUploadHandler: ICommandHandler<CancelUploadRequest>
         
     }
     
-    public async Task<IResult> Handle(CancelUploadRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(CancelUploadCommand request, CancellationToken cancellationToken)
     {
         await _awsStorageService.AbortMultipartUploadAsync(request.UploadId, request.FileName);
         return Result.SuccessResult(true);

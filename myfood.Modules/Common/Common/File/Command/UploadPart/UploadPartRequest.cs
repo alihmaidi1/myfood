@@ -5,7 +5,7 @@ using Shared.Contract.CQRS;
 
 namespace Common.File.Command.UploadPart;
 
-public class UploadPartRequest: ICommand
+public class UploadPartRequest
 {
     public string uploadId { get; set; }
     
@@ -16,4 +16,9 @@ public class UploadPartRequest: ICommand
 
     public IFormFile file { get; set; }
 
+}
+
+public class UploadPartCommand:UploadPartRequest, ICommand
+{
+    public Guid? RequestId { get; set; }
 }

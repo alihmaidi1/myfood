@@ -5,7 +5,7 @@ using Shared.Services.File;
 
 namespace Common.File.Command.UploadImage;
 
-public class UploadImageHandler: ICommandHandler<UploadImageRequest>
+public class UploadImageHandler: ICommandHandler<UploadImageCommand>
 {
 
     private readonly IAwsStorageService _awsStorageService;
@@ -14,7 +14,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageRequest>
         _awsStorageService= awsStorageService;
         
     }
-    public async Task<IResult> Handle(UploadImageRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
         var presignedUrl = await _awsStorageService.GenerateImageUploadUrl(request.Image);
         return Result.SuccessResult(presignedUrl.Value);

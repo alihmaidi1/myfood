@@ -36,12 +36,15 @@ public class Result
 
     public static IResult SuccessResult<TValue>(TValue? value) => Results.Ok(new TResult<TValue>(value, true, HttpStatusCode.OK));
 
-    
+    public static TResult<TValue?> ProcessedFailure<TValue>()=> new(default, false, HttpStatusCode.Conflict,Error.AlreadyProcessed);
+
+    public static IResult ProcessedFailureResult<TValue>()=> Results.UnprocessableEntity(new TResult<TValue>(default, false, HttpStatusCode.Conflict,Error.AlreadyProcessed));
+
     
     public static TResult<TValue?> ValidationFailure<TValue>(Error error)=> new(default, false, HttpStatusCode.UnprocessableContent,error);
 
     public static IResult ValidationFailureResult<TValue>(Error error)=> Results.UnprocessableEntity(new TResult<TValue>(default, false, HttpStatusCode.UnprocessableContent,error));
-    
+
     public static TResult<TValue?> InternalFailure<TValue>(Error error)=> new(default, false,HttpStatusCode.InternalServerError, error);
     
     public static IResult InternalFailureResult<TValue>(Error error)=> Results.InternalServerError(new TResult<TValue>(default, false,HttpStatusCode.InternalServerError, error));

@@ -3,10 +3,15 @@ using Shared.Services.File;
 
 namespace Common.File.Command.CompleteMultipartUpload;
 
-public class CompleteMultipartUploadRequest: ICommand
+public class CompleteMultipartUploadRequest
 {
     public string uploadId { get; set; }
     public string fileName { get; set; }
     public List<PartETag> partETags { get; set; }
 
+}
+
+public class CompleteMultipartUploadCommand: CompleteMultipartUploadRequest,ICommand
+{
+    public Guid? RequestId { get; set; }
 }

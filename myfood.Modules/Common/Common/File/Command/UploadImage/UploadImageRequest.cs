@@ -2,9 +2,14 @@ using Shared.Contract.CQRS;
 
 namespace Common.File.Command.UploadImage;
 
-public class UploadImageRequest: ICommand
+public class UploadImageRequest
 {
     
     public string Image { get; set; }
     
+}
+
+public class UploadImageCommand: UploadImageRequest,ICommand
+{
+    public Guid? RequestId { get; set; }
 }

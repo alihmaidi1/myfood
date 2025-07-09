@@ -21,24 +21,19 @@ public static class DependencyInjection
     {
 
 
-        services.AddHttpContextAccessor();
-        services.AddScoped<ICurrentUserService,CurrentUserService>();
-        services.AddScoped<IAwsStorageService,AwsStorageService>();
-        services.AddScoped<IWhatsAppService, WhatsAppService>();
-        services.AddScoped<ISmsTwilioService,SmsTwilioService>();
-        services.AddScoped<IMailService, MailService>();
+        #region Services
+        
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUserService,CurrentUserService>();
+            services.AddScoped<IAwsStorageService,AwsStorageService>();
+            services.AddScoped<IWhatsAppService, WhatsAppService>();
+            services.AddScoped<ISmsTwilioService,SmsTwilioService>();
+            services.AddScoped<IMailService, MailService>();
+
+        #endregion
         
         services.AddVersioning();
-        services.Scan(scan =>
-            scan.FromAssemblies(assemblies)
-                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<>)), publicOnly: false)
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
-                .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
-        
-        );
+        services.AddMemoryCache();
         
         
         services.AddRefitClient<IWhatsAppCloudApi>()
@@ -80,13 +75,30 @@ public static class DependencyInjection
         services.AddCarterWithAssemblies(assemblies);
         services.AddLimitRate();
         services.AddJwtConfiguration(configuration);
+
+        #region CQRS_Abstraction
+            
+            services.Scan(scan =>
+                scan.FromAssemblies(assemblies)
+                    .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<>)), publicOnly: false)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime()
+                    .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime()
+            
+            );
+            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
+            services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator.QueryHandler<>));
+            services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandHandler<>));
+            services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator.QueryHandler<>));
+            services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator.CommandHandler<>));
+
         
-        
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator.QueryHandler<>));
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator.QueryHandler<>));
+
+        #endregion
+
         return services;
     
     }
@@ -94,10 +106,9 @@ public static class DependencyInjection
 
     public static WebApplication UseShared(this WebApplication app)
     {
-        // app.UseRateLimiter();
+        app.UseRateLimiter();
 
         app.UseAuthentication();
-        // app.UseAuthorization();
         
         app.UseSwaggerUI(options =>
         {

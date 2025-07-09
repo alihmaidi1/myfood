@@ -1,5 +1,6 @@
 using System.Data;
 using Carter;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,16 +18,16 @@ public class ChangePasswordEndPoint: ICarterModule
     {
         
         app.MapPost("/users/changePassword",
-                async ([FromBody]  ChangePasswordRequest request,ICommandHandler<ChangePasswordRequest> handler,CancellationToken cancellationToken) =>
+                async ([FromBody]  ChangePasswordRequest request,[FromHeader]Guid RequestId,ICommandHandler<ChangePasswordCommand> handler,CancellationToken cancellationToken) =>
                 {
-                    
-                    var result=await handler.Handle(request, cancellationToken);
-                    // Results.Ok(result);
+                    var command = request.Adapt<ChangePasswordCommand>(); 
+                    command.RequestId=RequestId;
+                    var result=await handler.Handle(command, cancellationToken);
                     return  result;
                 })
             .Produces<TResult<bool>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequireAuthorization()
+            // .RequireAuthorization()
             .WithSummary("change user password")
             .WithDescription("change user password");
     

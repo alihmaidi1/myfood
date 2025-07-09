@@ -7,7 +7,7 @@ using PartETag = Amazon.S3.Model.PartETag;
 
 namespace Common.File.Command.CompleteMultipartUpload;
 
-public class CompleteMultipartUploadHandler: ICommandHandler<CompleteMultipartUploadRequest>
+public class CompleteMultipartUploadHandler: ICommandHandler<CompleteMultipartUploadCommand>
 {
     
     private readonly IAwsStorageService  _awsStorageService;
@@ -17,7 +17,7 @@ public class CompleteMultipartUploadHandler: ICommandHandler<CompleteMultipartUp
         
         _awsStorageService= awsStorageService;
     }
-    public async Task<IResult> Handle(CompleteMultipartUploadRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(CompleteMultipartUploadCommand request, CancellationToken cancellationToken)
     {
         await _awsStorageService.CompleteMultipartUploadAsync(request.uploadId, request.fileName, request.partETags.Select(x=>new PartETag()
         {

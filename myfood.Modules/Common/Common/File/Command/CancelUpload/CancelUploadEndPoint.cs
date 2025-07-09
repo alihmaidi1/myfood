@@ -1,12 +1,11 @@
 using Carter;
-using Common.File.Command.CompleteMultipartUpload;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Shared.Contract.CQRS;
 using Shared.OperationResult;
-
+using Mapster;
 namespace Common.File.Command.CancelUpload;
 
 public class CancelUploadEndPoint: ICarterModule
@@ -16,10 +15,12 @@ public class CancelUploadEndPoint: ICarterModule
         
         
         app.MapPost("/files/CancelUpload",
-                async ([FromBody]  CancelUploadRequest request,ICommandHandler<CancelUploadRequest> handler,CancellationToken cancellationToken) =>
+                async ([FromBody]  CancelUploadRequest request,[FromHeader]Guid RequestId,ICommandHandler<CancelUploadCommand> handler,CancellationToken cancellationToken) =>
                 {
                     
-                    var result=await handler.Handle(request, cancellationToken);
+                    var command = request.Adapt<CancelUploadCommand>();
+                    command.RequestId = RequestId; 
+                    var result=await handler.Handle(command, cancellationToken);
                     return  result;
                 })
             .Produces<TResult<bool>>(StatusCodes.Status201Created)

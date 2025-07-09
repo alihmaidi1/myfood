@@ -5,7 +5,7 @@ using Shared.Services.File;
 
 namespace Common.File.Command.UploadPart;
 
-public class UploadPartHandler: ICommandHandler<UploadPartRequest>
+public class UploadPartHandler: ICommandHandler<UploadPartCommand>
 {
 
     
@@ -16,7 +16,7 @@ public class UploadPartHandler: ICommandHandler<UploadPartRequest>
         
         _awsStorageService= awsStorageService;
     }
-    public async Task<IResult> Handle(UploadPartRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(UploadPartCommand request, CancellationToken cancellationToken)
     {
         using var stream = request.file.OpenReadStream();
 

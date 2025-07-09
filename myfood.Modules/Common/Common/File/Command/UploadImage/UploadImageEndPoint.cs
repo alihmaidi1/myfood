@@ -1,4 +1,5 @@
 using Carter;
+using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,11 @@ public class UploadImageEndPoint: ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/images/uploadPresignedUrl",
-                async ([FromBody]  UploadImageRequest request,ICommandHandler<UploadImageRequest> handler,CancellationToken cancellationToken) =>
+                async ([FromBody]  UploadImageRequest request,[FromHeader]Guid RequestId,ICommandHandler<UploadImageCommand> handler,CancellationToken cancellationToken) =>
                 {
-                    
-                    var result=await handler.Handle(request, cancellationToken);
+                    var command = request.Adapt<UploadImageCommand>(); 
+                    command.RequestId = RequestId;
+                    var result=await handler.Handle(command, cancellationToken);
                     return  result;
                 })
             .Produces<TResult<string>>(StatusCodes.Status201Created)

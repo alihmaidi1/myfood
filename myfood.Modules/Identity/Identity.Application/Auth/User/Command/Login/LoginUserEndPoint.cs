@@ -1,4 +1,5 @@
 using Carter;
+using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ public class LoginUserEndPoint: ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/users/login", 
-                async ([FromBody]  LoginUserRequest request,ICommandHandler<LoginUserRequest> handler,CancellationToken cancellationToken) =>
+                async ([FromBody]  LoginUserRequest request,[FromHeader]Guid RequestId,ICommandHandler<LoginUserCommand> handler,CancellationToken cancellationToken) =>
                 {
-                    var result=await handler.Handle(request, cancellationToken);
+                    LoginUserCommand command = request.Adapt<LoginUserCommand>();
+                    command.RequestId = RequestId;
+                    var result=await handler.Handle(command, cancellationToken);
                     return result;
                 })
             .Produces<TResult<LoginUserResponse>>(StatusCodes.Status201Created)

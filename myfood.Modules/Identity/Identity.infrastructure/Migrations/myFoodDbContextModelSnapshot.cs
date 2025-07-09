@@ -107,6 +107,9 @@ namespace Identity.infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ForgetCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 

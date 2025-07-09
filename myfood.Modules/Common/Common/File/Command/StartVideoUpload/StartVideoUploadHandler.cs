@@ -5,7 +5,7 @@ using Shared.Services.File;
 
 namespace Common.File.Command.StartVideoUpload;
 
-public class StartVideoUploadHandler: ICommandHandler<StartVideoUploadRequest>
+public class StartVideoUploadHandler: ICommandHandler<StartVideoUploadCommand>
 {
 
     private readonly IAwsStorageService  _awsStorageService;
@@ -14,7 +14,7 @@ public class StartVideoUploadHandler: ICommandHandler<StartVideoUploadRequest>
         _awsStorageService= awsStorageService;
         
     }
-    public async Task<IResult> Handle(StartVideoUploadRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(StartVideoUploadCommand request, CancellationToken cancellationToken)
     {
         var uploadResult=await _awsStorageService.InitiateChunkedVideoUpload(request.Video);
         return Result.SuccessResult(uploadResult.Value);

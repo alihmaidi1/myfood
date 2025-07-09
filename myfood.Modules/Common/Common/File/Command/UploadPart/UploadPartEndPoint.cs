@@ -1,5 +1,6 @@
 using Carter;
 using Common.File.Command.StartVideoUpload;
+using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,12 @@ public class UploadPartEndPoint: ICarterModule
     {
         
         app.MapPost("/files/uploadPart",
-                async ([FromForm]UploadPartRequest request,ICommandHandler<UploadPartRequest> handler,CancellationToken cancellationToken) =>
+                async ([FromForm]UploadPartRequest request,[FromHeader]Guid RequestId,ICommandHandler<UploadPartCommand> handler,CancellationToken cancellationToken) =>
                 {
-                    
-                    var result=await handler.Handle(request, cancellationToken);
+
+                    UploadPartCommand command =request.Adapt<UploadPartCommand>();
+                    command.RequestId = RequestId;
+                    var result=await handler.Handle(command, cancellationToken);
                     return  result;
                 })
             .Produces<TResult<string>>(StatusCodes.Status201Created)

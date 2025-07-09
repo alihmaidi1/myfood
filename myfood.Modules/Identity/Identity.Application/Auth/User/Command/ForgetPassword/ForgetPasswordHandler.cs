@@ -6,7 +6,7 @@ using Shared.Services.Twilio;
 
 namespace Identity.Application.Auth.User.Command.ForgetPassword;
 
-public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordRequest>
+public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordCommand>
 {
 
     private readonly UserManager<Domain.Security.User>  _userManager;
@@ -17,7 +17,7 @@ public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordRequest>
         _userManager = userManager;
         _smsTwilioService = smsTwilioService;
     }
-    public async Task<IResult> Handle(ForgetPasswordRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(ForgetPasswordCommand request, CancellationToken cancellationToken)
     {
         var user=await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
