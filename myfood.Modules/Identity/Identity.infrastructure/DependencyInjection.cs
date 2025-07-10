@@ -15,7 +15,7 @@ namespace Identity.infrastructure;
 public static class DependencyInjection
 {
 
-    public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityInfrastructureModule(this IServiceCollection services, IConfiguration configuration)
     {
 
 

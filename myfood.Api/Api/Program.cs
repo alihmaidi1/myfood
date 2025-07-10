@@ -1,8 +1,7 @@
-using System.Text;
+
 using Api.JwtConfiguration;
 using Identity.Application;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Identity.infrastructure;
 using myfood.Messages.Extensions;
 using Notification;
 using Serilog;
@@ -30,14 +29,18 @@ builder.Services.AddOpenApi(options =>
 
 builder.Services.AddShared(builder.Configuration,allAssembly);
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
-builder.Services.AddIdentityModules(builder.Configuration);
+
+builder.Services.AddIdentityApplicationModules(builder.Configuration);
+builder.Services.AddIdentityInfrastructureModule(builder.Configuration);
+
 builder.Services.AddNotificationModule(builder.Configuration);
 
 var app = builder.Build();
 
 app.MapOpenApi();
 app.UseShared()
-    .UseIdentityModule()
+    .UseIdentityApplicationModule()
+    .UseIdentityInfrastructureModule()
     .UseNotificationModule();
 
 app.MapControllers();

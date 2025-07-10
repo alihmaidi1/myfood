@@ -7,12 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="File\Query\" />
+      <Folder Include="Data\" />
+      <Folder Include="Hubs\" />
+      <Folder Include="Models\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\myfood.Shared\Shared\Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.6" />
+    </ItemGroup>
 
 </Project>

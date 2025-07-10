@@ -24,6 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\myfood.Modules\Common\Common\Common.csproj" />
       <ProjectReference Include="..\..\myfood.Modules\Identity\Identity.Application\Identity.Application.csproj" />
+      <ProjectReference Include="..\..\myfood.Modules\Identity\Identity.infrastructure\Identity.infrastructure.csproj" />
       <ProjectReference Include="..\..\myfood.Modules\Notification\Notification\Notification.csproj" />
     </ItemGroup>
 

@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\myfood.Shared\myfood.Messages\myfood.Messages.csproj" />
       <ProjectReference Include="..\..\..\myfood.Shared\Shared\Shared.csproj" />
     </ItemGroup>
 
