@@ -23,6 +23,7 @@ public class LoginUserEndPoint: ICarterModule
                 })
             .Produces<TResult<LoginUserResponse>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithTags("UserAuthentication")
             
             .WithSummary("login user to website")
             .WithDescription("login user to website");

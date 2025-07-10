@@ -28,6 +28,8 @@ public class StartVideoUploadEndPoint: ICarterModule
             .Produces<TResult<ChunkUploadResponse>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Start Video Upload")
+            .WithTags("Files")
+            
             .WithDescription("Start Video Upload");
     }
 }

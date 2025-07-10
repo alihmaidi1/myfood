@@ -29,6 +29,8 @@ public class ChangePasswordEndPoint: ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             // .RequireAuthorization()
             .WithSummary("change user password")
+            .WithTags("UserAuthentication")
+            
             .WithDescription("change user password");
     
     }

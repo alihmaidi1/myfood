@@ -28,6 +28,8 @@ public class myFoodDbContext: IdentityDbContext<User,Role,Guid>
     
     public DbSet<ArchiveRecord>  ArchiveRecords { get; init; }
     public DbSet<OutboxMessage> OutboxMessages { get; init; }
+    public DbSet<OutboxConsumer>  OutboxConsumers { get; init; }
+    
     public DbSet<RefreshToken> RefreshTokens { get; init; }
 
 }

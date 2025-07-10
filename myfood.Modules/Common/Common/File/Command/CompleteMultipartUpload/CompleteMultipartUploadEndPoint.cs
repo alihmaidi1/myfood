@@ -28,6 +28,8 @@ public class CompleteMultipartUploadEndPoint: ICarterModule
             .Produces<TResult<bool>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("completedMultipartUpload")
+            .WithTags("Files")
+            
             .WithDescription("completedMultipartUpload");
     }
 }

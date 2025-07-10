@@ -24,6 +24,7 @@ public class UploadImageEndPoint: ICarterModule
             .Produces<TResult<string>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("get PresignedUrl")
+            .WithTags("Files")
             
             .WithDescription("get PresignedUrl");
 

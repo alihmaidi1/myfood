@@ -4,6 +4,7 @@ using Identity.infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.infrastructure.Migrations
 {
     [DbContext(typeof(myFoodDbContext))]
-    partial class myFoodDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250709173038_add outbox message")]
+    partial class addoutboxmessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,21 +295,6 @@ namespace Identity.infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ArchiveRecords", "Identity");
-                });
-
-            modelBuilder.Entity("myfood.Messages.Outbox.OutboxConsumer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OutboxConsumers", "Identity");
                 });
 
             modelBuilder.Entity("myfood.Messages.Outbox.OutboxMessage", b =>

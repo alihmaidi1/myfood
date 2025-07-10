@@ -29,6 +29,8 @@ public class UploadPartEndPoint: ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .DisableAntiforgery()
             .WithSummary("Upload part")
+            .WithTags("Files")
+            
             .WithDescription("Upload part");
     }
 }

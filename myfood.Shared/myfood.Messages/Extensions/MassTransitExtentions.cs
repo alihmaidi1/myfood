@@ -2,6 +2,7 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using myfood.Messages.Outbox;
 
 namespace myfood.Messages.Extensions;
 
@@ -25,7 +26,7 @@ public static class MassTransitExtentions
             config.UsingInMemory((context, configurator) =>configurator.ConfigureEndpoints(context));
             
         });
-
+        services.TryDecorate(typeof(IConsumer<>), typeof(IdempotencyIntegrationEventHandler<,>));
         return services;
     }
     
