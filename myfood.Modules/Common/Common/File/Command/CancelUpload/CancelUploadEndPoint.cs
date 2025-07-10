@@ -17,7 +17,6 @@ public class CancelUploadEndPoint: ICarterModule
         app.MapPost("/files/CancelUpload",
                 async ([FromBody]  CancelUploadRequest request,[FromHeader]Guid RequestId,ICommandHandler<CancelUploadCommand> handler,CancellationToken cancellationToken) =>
                 {
-                    
                     var command = request.Adapt<CancelUploadCommand>();
                     command.RequestId = RequestId; 
                     var result=await handler.Handle(command, cancellationToken);

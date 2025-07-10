@@ -1,5 +1,6 @@
 
 using Api.JwtConfiguration;
+
 using Identity.Application;
 using Identity.infrastructure;
 using myfood.Messages.Extensions;
@@ -13,9 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
 
-
 builder.Services.AddControllers();
 var allAssembly = AppDomain.CurrentDomain.GetAssemblies();
+
 
 
 // Add services to the container. 
