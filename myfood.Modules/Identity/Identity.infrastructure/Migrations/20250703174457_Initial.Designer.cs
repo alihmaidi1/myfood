@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Identity.infrastructure.Migrations
 {
-    [DbContext(typeof(myFoodDbContext))]
+    [DbContext(typeof(myFoodIdentityDbContext))]
     [Migration("20250703174457_Initial")]
     partial class Initial
     {

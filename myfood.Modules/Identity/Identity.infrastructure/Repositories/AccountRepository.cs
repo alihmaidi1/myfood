@@ -6,7 +6,7 @@ namespace Identity.infrastructure.Repositories;
 
 public class AccountRepository: BaseRepository<User>,IAccountRepository
 {
-    public AccountRepository(myFoodDbContext context) : base(context)
+    public AccountRepository(myFoodIdentityDbContext context) : base(context)
     {
     }
 }

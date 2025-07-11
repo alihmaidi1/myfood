@@ -9,19 +9,19 @@ namespace Identity.infrastructure.Seed;
 public static class DefaultRoleSeeder
 {
     
-    public static async Task seedData(myFoodDbContext dbContext)
+    public static async Task seedData(myFoodIdentityDbContext identityDbContext)
     {
-        if (!await dbContext.Roles.AnyAsync())
+        if (!await identityDbContext.Roles.AnyAsync())
         {
-            dbContext.Roles.AddRange(Enum.GetNames(typeof(StaticRole)).Select(x=>new Role()
+            identityDbContext.Roles.AddRange(Enum.GetNames(typeof(StaticRole)).Select(x=>new Role()
             {
                 
                 Name = x,
                 NormalizedName = x.ToUpper()
                 
             }).ToList());
-            await dbContext.SaveChangesAsync();
-            var superadminRole = await dbContext.Roles.FirstAsync(x=>x.Name==nameof(StaticRole.SuperAdmin))!;
+            await identityDbContext.SaveChangesAsync();
+            var superadminRole = await identityDbContext.Roles.FirstAsync(x=>x.Name==nameof(StaticRole.SuperAdmin))!;
             var permissions = Enum.GetNames(typeof(Permission)).Select(x=>new IdentityRoleClaim<Guid>
             {
                 ClaimType    = "Permission",
@@ -29,8 +29,8 @@ public static class DefaultRoleSeeder
                 RoleId      = superadminRole.Id,
                 
             }).ToList();
-            dbContext.RoleClaims.AddRange(permissions);
-            await dbContext.SaveChangesAsync();
+            identityDbContext.RoleClaims.AddRange(permissions);
+            await identityDbContext.SaveChangesAsync();
         }
 
 

@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.infrastructure.Seed;
 
-public static class DatabaseSeed
+public static class IdentityDatabaseSeed
 {
 
 
     public static async Task InitializeAsync(IServiceProvider services)
     {
-        var context = services.GetRequiredService<myFoodDbContext>();     
+        var context = services.GetRequiredService<myFoodIdentityDbContext>();     
         var roleManager = services.GetRequiredService<RoleManager<Role>>();     
         var userManager = services.GetRequiredService<UserManager<User>>();     
         await context.Database.EnsureCreatedAsync();    

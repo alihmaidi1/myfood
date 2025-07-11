@@ -50,3 +50,8 @@ app.MapControllers();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.Run();
+
+public partial class Program
+{
+    
+}

@@ -13,10 +13,10 @@ namespace Identity.infrastructure.Repositories.Jwt;
 public class JwtRepository: IJwtRepository
 {
 
-    private readonly myFoodDbContext _context;
+    private readonly myFoodIdentityDbContext _context;
     private readonly JwtSetting _jwtOption;
     
-    public JwtRepository(myFoodDbContext context,IOptions<JwtSetting> setting)
+    public JwtRepository(myFoodIdentityDbContext context,IOptions<JwtSetting> setting)
     {
         _jwtOption = setting.Value;
         _context=context;

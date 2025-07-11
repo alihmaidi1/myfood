@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Identity.infrastructure.Migrations
 {
-    [DbContext(typeof(myFoodDbContext))]
+    [DbContext(typeof(myFoodIdentityDbContext))]
     [Migration("20250704143512_add refresh token")]
     partial class addrefreshtoken
     {

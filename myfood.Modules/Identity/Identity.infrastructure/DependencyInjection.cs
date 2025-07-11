@@ -29,12 +29,12 @@ public static class DependencyInjection
             
             })
             .AddRoles<Role>()
-            .AddEntityFrameworkStores<myFoodDbContext>()
+            .AddEntityFrameworkStores<myFoodIdentityDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
-        services.AddDbContext<myFoodDbContext>(option =>
+        services.AddDbContext<myFoodIdentityDbContext>(option =>
         {
             option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             
@@ -42,7 +42,7 @@ public static class DependencyInjection
 
         });
 
-        services.AddHostedService<OutboxProcessor<myFoodDbContext>>();
+        services.AddHostedService<OutboxProcessor<myFoodIdentityDbContext>>();
         return services;
     }
     
@@ -52,7 +52,7 @@ public static class DependencyInjection
     
         using(var scope= app.Services.CreateScope()){
         
-            DatabaseSeed.InitializeAsync(scope.ServiceProvider).GetAwaiter().GetResult();
+            IdentityDatabaseSeed.InitializeAsync(scope.ServiceProvider).GetAwaiter().GetResult();
         }
 
         return app;

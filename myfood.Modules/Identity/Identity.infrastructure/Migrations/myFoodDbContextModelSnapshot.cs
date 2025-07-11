@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Identity.infrastructure.Migrations
 {
-    [DbContext(typeof(myFoodDbContext))]
+    [DbContext(typeof(myFoodIdentityDbContext))]
     partial class myFoodDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -7,11 +7,11 @@ using Shared.Services.Archive;
 
 namespace Identity.infrastructure;
 
-public class myFoodDbContext: IdentityDbContext<User,Role,Guid>
+public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
 {
     
     
-    public myFoodDbContext(DbContextOptions<myFoodDbContext> option) : base(option)
+    public myFoodIdentityDbContext(DbContextOptions<myFoodIdentityDbContext> option) : base(option)
     {
 
 
