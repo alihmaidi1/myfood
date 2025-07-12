@@ -6,10 +6,44 @@ services:
     build:
       context: .
       dockerfile: myfood.Api/Api/Dockerfile
+    networks:
+      - myFood_network
     
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+        reservations:
+          cpus: "0.5"
+          memory: 500M
+    labels:
+      - "description=My Food API Service"
+  
+  
   myFood_db:
     image: postgres:alpine
-  
+    networks:
+      - myFood_network
+    
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 2G
+        reservations:
+          cpus: "0.8"
+          memory: 800M
+    
+    labels:
+      - "description=My FoodDb Service"
+
+
+
+
 volumes:
   myFood_db:
 
+networks:
+  myFood_network:
+    driver: bridge

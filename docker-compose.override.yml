@@ -34,6 +34,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=myFood
+      - POSTGRES_HOST_AUTH_METHOD=md5
     restart: always
     volumes:
       - myFood_db:/var/lib/postgresql/data/
