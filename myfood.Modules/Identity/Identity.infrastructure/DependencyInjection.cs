@@ -36,7 +36,7 @@ public static class DependencyInjection
 
         services.AddDbContext<myFoodIdentityDbContext>(option =>
         {
-            option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             
             option.EnableSensitiveDataLogging();
 

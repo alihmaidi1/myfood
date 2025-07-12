@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +27,12 @@
       <ProjectReference Include="..\..\myfood.Modules\Identity\Identity.Application\Identity.Application.csproj" />
       <ProjectReference Include="..\..\myfood.Modules\Identity\Identity.infrastructure\Identity.infrastructure.csproj" />
       <ProjectReference Include="..\..\myfood.Modules\Notification\Notification\Notification.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 

@@ -19,9 +19,9 @@ public class User: IdentityUser<Guid>, IEntity
     public string? ForgetCode { get; set; }
 
     public string CreatedBy { get; set; } = "";
-    public DateTime CreatedAt { get; set; }=DateTime.Now;
+    public DateTime CreatedAt { get; set; }=DateTime.UtcNow;
     public string LastModifiedBy { get; set; } = "";
-    public DateTime LastModified { get; set; }=DateTime.Now;
+    public DateTime LastModified { get; set; }=DateTime.UtcNow;
     
     
 }

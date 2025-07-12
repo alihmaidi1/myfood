@@ -1,11 +1,10 @@
 using Identity.infrastructure;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Testcontainers.MsSql;
+using Testcontainers.PostgreSql;
 
 namespace Identity.Test.IntegrationTest;
 
@@ -13,8 +12,9 @@ public class IntegrationTestWebAppFactory: WebApplicationFactory<Program>,IAsync
 {
     
     // private readonly var _dbcontainer=
-    private readonly MsSqlContainer _dbContainer = new MsSqlBuilder()
-        .WithImage("mcr.microsoft.com/mssql/server:latest")
+    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
+        .WithImage("postgres:alpine")
+        .WithUsername("postgres")
         .WithPassword("Strong_password_123!")
         .WithName("MsSqlContainerIntegrationTestWebApp")
         .Build();
@@ -33,7 +33,7 @@ public class IntegrationTestWebAppFactory: WebApplicationFactory<Program>,IAsync
             Services.AddDbContext<myFoodIdentityDbContext>(options =>
             {
 
-                options.UseSqlServer(_dbContainer.GetConnectionString());
+                options.UseNpgsql(_dbContainer.GetConnectionString());
             });
             
             
