@@ -1,4 +1,4 @@
-RealEstate.Api/appsettings.Development.json
+./myfood.Api/Api/appsettings.Development.json
 [Bb]in/
 [Oo]bj/
 .vs/
@@ -6,3 +6,5 @@ RealEstate.Api/appsettings.Development.json
 .vscode
 .gitignore
 /Shared/RealEstate.Shared/CQRS/
+
+.env
