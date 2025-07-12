@@ -15,6 +15,7 @@ public class IntegrationTestWebAppFactory: WebApplicationFactory<Program>,IAsync
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres:alpine")
         .WithUsername("postgres")
+        .WithEnvironment("ASPNETCORE_ENVIRONMENT","Development")
         .WithPassword("Strong_password_123!")
         .WithName("MsSqlContainerIntegrationTestWebApp")
         .Build();
