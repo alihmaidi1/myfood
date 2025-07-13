@@ -38,4 +38,28 @@ services:
     restart: always
     volumes:
       - myFood_db:/var/lib/postgresql/data/
+  
+  
+  myFood_nginx:
+    container_name: myFood_nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - webroot:/var/www/html
 
+    depends_on:
+      - myFoodApi
+
+#  myFood_certbot:
+#    container_name: myFood_certbot  
+#    volumes:
+#      - certbot-etc:/etc/letsencrypt
+#      - certbot-var:/var/lib/letsencrypt
+#      - webroot:/var/www/html
+#    depends_on:
+#      - myFood_nginx
+#    command:
+#      - certonly --webroot-webroot-path=/var/www/html --email alihmaidi095@gmail.com --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d myfood.local 
+#    

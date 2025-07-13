@@ -7,6 +7,7 @@ services:
       context: .
       dockerfile: myfood.Api/Api/Dockerfile
     networks:
+      - myFoodDb_network
       - myFood_network
     
     deploy:
@@ -24,7 +25,7 @@ services:
   myFood_db:
     image: postgres:alpine
     networks:
-      - myFood_network
+      - myFoodDb_network
     
     deploy:
       resources:
@@ -37,13 +38,39 @@ services:
     
     labels:
       - "description=My FoodDb Service"
+  
+  myFood_nginx:
+    image: nginx:alpine
+    networks:
+      - myFood_network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+          memory: 800M
+        reservations:
+          cpus: "0.5"
+          memory: 500M
+    labels:
+      - "description=My FoodDb Reverse Proxy"
+  
+  
+#  myFood_certbot:
+#    image: certbot/certbot
+#    
 
 
 
 
 volumes:
   myFood_db:
+  webroot:
+#  certbot-var:
+#  certbot-etc:
 
 networks:
+  myFoodDb_network:
+    driver: bridge
+    
   myFood_network:
     driver: bridge
