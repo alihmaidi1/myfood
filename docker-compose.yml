@@ -55,9 +55,7 @@ services:
       - "description=My FoodDb Reverse Proxy"
   
   
-#  myFood_certbot:
-#    image: certbot/certbot
-#    
+
 
 
 
@@ -65,8 +63,6 @@ services:
 volumes:
   myFood_db:
   webroot:
-#  certbot-var:
-#  certbot-etc:
 
 networks:
   myFoodDb_network:
