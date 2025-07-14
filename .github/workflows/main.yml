@@ -4,7 +4,7 @@ name: my Food CI
 # Define when this workflow will run
 on:
   workflow_dispatch: # Allow manual triggering from GitHub UI
-  push:
+  pull_request:
     branches:
       - master # Run automatically when code is pushed to main branch
 
@@ -54,11 +54,3 @@ jobs:
           --no-restore
           --no-build
           --property:PublishDir=${{ env.PUBLISH_DIR }}
-  
-      # # Store the published output as an artifact for later jobs
-      # - name: Publish Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: webapp  # Name of the artifact
-      #     path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-  
