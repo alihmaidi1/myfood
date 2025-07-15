@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Common.File.Command.UploadImage;
 
-public class UploadImageValidation: AbstractValidator<UploadImageRequest>
+internal sealed class UploadImageValidation: AbstractValidator<UploadImageRequest>
 {
 
     public UploadImageValidation()

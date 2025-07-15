@@ -1,12 +1,12 @@
 using System.Reflection;
 using Shared.Architecture;
 
-namespace Common.Test;
+namespace Notification.Test;
 
 public class ApplicationTests: CommonApplicationTests
 {
     
-    private static readonly Assembly ApplicationAssembly = Common.AssemblyReference.Assembly;
+    private static readonly Assembly ApplicationAssembly = Notification.AssemblyReference.Assembly;
     
         
     [Fact]

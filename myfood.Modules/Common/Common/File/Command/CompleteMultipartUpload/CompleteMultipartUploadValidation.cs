@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Common.File.Command.CompleteMultipartUpload;
 
-public class CompleteMultipartUploadValidation: AbstractValidator<CompleteMultipartUploadRequest>
+internal sealed class CompleteMultipartUploadValidation: AbstractValidator<CompleteMultipartUploadRequest>
 {
 
     public CompleteMultipartUploadValidation()

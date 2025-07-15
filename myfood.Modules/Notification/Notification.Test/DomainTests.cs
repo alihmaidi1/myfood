@@ -1,11 +1,11 @@
 using System.Reflection;
 using Shared.Architecture;
 
-namespace Common.Test;
+namespace Notification.Test;
 
 public class DomainTests: CommonDomainTests
 {
-    private static readonly Assembly DomainAssembly = Common.AssemblyReference.Assembly;
+    private static readonly Assembly DomainAssembly = Notification.AssemblyReference.Assembly;
     
         
     [Fact]
