@@ -10,7 +10,7 @@ public class ForgetPasswordRequest
 }
 
 
-public class ForgetPasswordCommand : ForgetPasswordRequest,ICommand
+public sealed class ForgetPasswordCommand : ForgetPasswordRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

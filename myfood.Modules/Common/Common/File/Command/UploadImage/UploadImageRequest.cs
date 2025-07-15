@@ -10,7 +10,7 @@ public class UploadImageRequest
     
 }
 
-public class UploadImageCommand: UploadImageRequest,ICommand
+public sealed class UploadImageCommand: UploadImageRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

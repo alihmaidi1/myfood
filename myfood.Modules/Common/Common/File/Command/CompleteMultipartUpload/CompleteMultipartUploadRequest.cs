@@ -11,7 +11,7 @@ public class CompleteMultipartUploadRequest
 
 }
 
-public class CompleteMultipartUploadCommand: CompleteMultipartUploadRequest,ICommand
+public sealed class CompleteMultipartUploadCommand: CompleteMultipartUploadRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Identity.Application.Auth.User.Command.ForgetPassword;
 
-public class ForgetPasswordValidation: AbstractValidator<ForgetPasswordRequest>
+internal sealed class ForgetPasswordValidation: AbstractValidator<ForgetPasswordRequest>
 {
 
     public ForgetPasswordValidation()

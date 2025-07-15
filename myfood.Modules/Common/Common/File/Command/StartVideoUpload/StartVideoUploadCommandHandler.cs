@@ -6,11 +6,11 @@ using Shared.Domain.OperationResult;
 
 namespace Common.File.Command.StartVideoUpload;
 
-public class StartVideoUploadHandler: ICommandHandler<StartVideoUploadCommand>
+internal sealed class StartVideoUploadCommandHandler: ICommandHandler<StartVideoUploadCommand>
 {
 
     private readonly IAwsStorageService  _awsStorageService;
-    public StartVideoUploadHandler(IAwsStorageService  awsStorageService)
+    public StartVideoUploadCommandHandler(IAwsStorageService  awsStorageService)
     {
         _awsStorageService= awsStorageService;
         

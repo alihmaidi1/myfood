@@ -10,7 +10,7 @@ public class ChangePasswordRequest
 
 }
 
-public class ChangePasswordCommand : ChangePasswordRequest,ICommand
+public sealed class ChangePasswordCommand : ChangePasswordRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

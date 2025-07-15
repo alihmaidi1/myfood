@@ -16,7 +16,7 @@ public class UploadPartRequest
 
 }
 
-public class UploadPartCommand:UploadPartRequest, ICommand
+public sealed class UploadPartCommand:UploadPartRequest, ICommand
 {
     public Guid? RequestId { get; set; }
 }

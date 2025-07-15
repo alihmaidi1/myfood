@@ -6,11 +6,11 @@ using Shared.Domain.OperationResult;
 
 namespace Common.File.Command.CancelUpload;
 
-public class CancelUploadHandler: ICommandHandler<CancelUploadCommand>
+internal sealed class CancelUploadCommandHandler: ICommandHandler<CancelUploadCommand>
 {
 
     private readonly IAwsStorageService  _awsStorageService;
-    public CancelUploadHandler(IAwsStorageService  awsStorageService)
+    public CancelUploadCommandHandler(IAwsStorageService  awsStorageService)
     {
         _awsStorageService= awsStorageService;
         

@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.Test", "myfood
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.ArchitectureTest", "myfood.Modules\Notification\Notification.ArchitectureTest\Notification.ArchitectureTest.csproj", "{902D0402-F370-49E5-8136-870C7394D7F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.ArchitectureTest", "myfood.Shared\Shared.ArchitectureTest\Shared.ArchitectureTest.csproj", "{6D993772-86E8-4495-A680-7FDC30FEB3BD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "myfood.Shared\Shared.Domain\Shared.Domain.csproj", "{A3718091-AFE5-4D44-9013-0A1D275CC3F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Application", "myfood.Shared\Shared.Application\Shared.Application.csproj", "{467C168A-67BC-4FA4-91C6-2C30F00F3EA6}"
@@ -50,6 +48,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure", "myfood.Shared\Shared.Infrastructure\Shared.Infrastructure.csproj", "{EA0770F8-39D3-41C0-94ED-C9EE25EF8B6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "myfood.Modules\Common\Common.Test\Common.Test.csproj", "{D6992FEE-7F3B-4602-99F4-FBF132B96ED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Architecture", "myfood.Shared\Shared.Architecture\Shared.Architecture.csproj", "{7D95A675-6D16-4022-AEA9-6F65F88E9D49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,11 +72,11 @@ Global
 		{24A0F779-541A-4EA1-8E7F-383BC73D10E0} = {DA28DEBC-3230-46CD-88F1-B6FD703A9A46}
 		{182070CF-FD48-46B6-9028-5954EB193642} = {6194D035-BD69-435B-BCDF-9D195325CA91}
 		{902D0402-F370-49E5-8136-870C7394D7F5} = {6194D035-BD69-435B-BCDF-9D195325CA91}
-		{6D993772-86E8-4495-A680-7FDC30FEB3BD} = {520E5A25-EFE9-4778-B102-BD1E18E1409D}
 		{A3718091-AFE5-4D44-9013-0A1D275CC3F4} = {520E5A25-EFE9-4778-B102-BD1E18E1409D}
 		{467C168A-67BC-4FA4-91C6-2C30F00F3EA6} = {520E5A25-EFE9-4778-B102-BD1E18E1409D}
 		{EA0770F8-39D3-41C0-94ED-C9EE25EF8B6B} = {520E5A25-EFE9-4778-B102-BD1E18E1409D}
 		{D6992FEE-7F3B-4602-99F4-FBF132B96ED5} = {BC623213-32E1-43CC-ADD7-6E36D074A771}
+		{7D95A675-6D16-4022-AEA9-6F65F88E9D49} = {520E5A25-EFE9-4778-B102-BD1E18E1409D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{90F2A820-6703-4066-BA53-3EA7ACEEBB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -127,10 +127,6 @@ Global
 		{902D0402-F370-49E5-8136-870C7394D7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{902D0402-F370-49E5-8136-870C7394D7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{902D0402-F370-49E5-8136-870C7394D7F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D993772-86E8-4495-A680-7FDC30FEB3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D993772-86E8-4495-A680-7FDC30FEB3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D993772-86E8-4495-A680-7FDC30FEB3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D993772-86E8-4495-A680-7FDC30FEB3BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3718091-AFE5-4D44-9013-0A1D275CC3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3718091-AFE5-4D44-9013-0A1D275CC3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3718091-AFE5-4D44-9013-0A1D275CC3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -147,5 +143,9 @@ Global
 		{D6992FEE-7F3B-4602-99F4-FBF132B96ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6992FEE-7F3B-4602-99F4-FBF132B96ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6992FEE-7F3B-4602-99F4-FBF132B96ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D95A675-6D16-4022-AEA9-6F65F88E9D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D95A675-6D16-4022-AEA9-6F65F88E9D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D95A675-6D16-4022-AEA9-6F65F88E9D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D95A675-6D16-4022-AEA9-6F65F88E9D49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
