@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
-using Shared.Contract.CQRS;
-using Shared.Services.User;
+using Shared.Application.Services.User;
+using Shared.Domain.CQRS;
 
 namespace Identity.Application.Auth.User.Command.ChangePassword;
 

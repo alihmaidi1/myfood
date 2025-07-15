@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.Twilio;
+using Shared.Domain.CQRS;
+using Shared.Domain.Extensions;
+using Shared.Domain.OperationResult;
+using Shared.Domain.Services.Twilio;
 
 
 namespace Identity.Application.Auth.User.Command.ForgetPassword;
@@ -11,12 +12,12 @@ public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordCommand>
 {
 
     private readonly UserManager<Domain.Security.User>  _userManager;
-    private readonly ISmsTwilioService  _smsTwilioService;
+    // private readonly Iemailser  _smsTwilioService;
 
     public ForgetPasswordHandler(UserManager<Domain.Security.User>  userManager,ISmsTwilioService  smsTwilioService)
     {
         _userManager = userManager;
-        _smsTwilioService = smsTwilioService;
+        // _smsTwilioService = smsTwilioService;
     }
     public async Task<IResult> Handle(ForgetPasswordCommand request, CancellationToken cancellationToken)
     {
@@ -24,13 +25,18 @@ public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordCommand>
         if (user == null)
         {
             
-            return Result.ValidationFailureResult<bool>(Error.ValidationFailures("Email or Password is not valid."));
+            return Result.ValidationFailure<bool>(Error.ValidationFailures("Email or Password is not valid.")).ToActionResult();
         }
-
-        user.ForgetCode = "123456";
+        var result=user.SetForgetCode(string.Empty.GenerateRandomString(5),5);
+        if (result.IsFailure)
+        {
+            return result.ToActionResult();
+        }
+        
+        
         
         await _userManager.UpdateAsync(user);
         
-        return Result.SuccessResult(true);
+        return Result.Success(true).ToActionResult();
     }
 }

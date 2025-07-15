@@ -18,6 +18,7 @@
 
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\myfood.Shared\Shared.Application\Shared.Application.csproj" />
       <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
     </ItemGroup>
 

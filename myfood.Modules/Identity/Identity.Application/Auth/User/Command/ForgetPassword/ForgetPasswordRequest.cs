@@ -1,4 +1,4 @@
-using Shared.Contract.CQRS;
+using Shared.Domain.CQRS;
 
 namespace Identity.Application.Auth.User.Command.ForgetPassword;
 

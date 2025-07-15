@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
 using Mapster;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
+
 namespace Common.File.Command.CancelUpload;
 
 public class CancelUploadEndPoint: ICarterModule

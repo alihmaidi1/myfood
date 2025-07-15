@@ -1,13 +1,11 @@
 using Carter;
-using Common.File.Command.StartVideoUpload;
 using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.File;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 
 namespace Common.File.Command.UploadPart;
 

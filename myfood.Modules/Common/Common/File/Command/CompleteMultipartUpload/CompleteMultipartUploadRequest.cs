@@ -1,5 +1,5 @@
-using Shared.Contract.CQRS;
-using Shared.Services.File;
+using Common.Services.File;
+using Shared.Domain.CQRS;
 
 namespace Common.File.Command.CompleteMultipartUpload;
 

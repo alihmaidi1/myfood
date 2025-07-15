@@ -3,7 +3,7 @@ using Identity.Domain.Security;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using myfood.Messages.Outbox;
-using Shared.Services.Archive;
+using Shared.Infrastructure.Services.Archive;
 
 namespace Identity.infrastructure;
 

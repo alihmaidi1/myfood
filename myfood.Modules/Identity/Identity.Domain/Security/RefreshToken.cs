@@ -1,4 +1,4 @@
-using Shared.DDD;
+using Shared.Domain.Entities;
 
 namespace Identity.Domain.Security;
 
