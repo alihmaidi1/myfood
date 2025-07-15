@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Common.File.Command.StartVideoUpload;
 
-public class StartVideoUploadValidation: AbstractValidator<StartVideoUploadRequest>
+internal sealed class StartVideoUploadValidation: AbstractValidator<StartVideoUploadRequest>
 {
 
     public StartVideoUploadValidation()

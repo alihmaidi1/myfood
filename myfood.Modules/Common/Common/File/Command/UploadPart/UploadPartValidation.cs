@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Common.File.Command.UploadPart;
 
-public class UploadPartValidation: AbstractValidator<UploadPartRequest>
+internal sealed class UploadPartValidation: AbstractValidator<UploadPartRequest>
 {
 
     public UploadPartValidation()
