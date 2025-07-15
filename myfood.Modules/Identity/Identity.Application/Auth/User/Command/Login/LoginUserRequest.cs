@@ -9,7 +9,7 @@ public class LoginUserRequest
     
 }
 
-public class LoginUserCommand:LoginUserRequest, ICommand
+public sealed class LoginUserCommand:LoginUserRequest, ICommand
 {
     public Guid? RequestId { get; set; }
 }

@@ -4,10 +4,10 @@ using Shared.Domain.CQRS;
 
 namespace Identity.Application.Auth.User.Command.ChangePassword;
 
-public class ChangePasswordHandler: ICommandHandler<ChangePasswordCommand>
+internal sealed class ChangePasswordCommandHandler: ICommandHandler<ChangePasswordCommand>
 {
     private readonly ICurrentUserService _currentUserService;
-    public ChangePasswordHandler(ICurrentUserService  currentUserService)
+    public ChangePasswordCommandHandler(ICurrentUserService  currentUserService)
     {
         
         _currentUserService=currentUserService;

@@ -6,13 +6,13 @@ using Shared.Domain.OperationResult;
 
 namespace Common.File.Command.UploadPart;
 
-public class UploadPartHandler: ICommandHandler<UploadPartCommand>
+internal sealed class UploadPartCommandHandler: ICommandHandler<UploadPartCommand>
 {
 
     
     private readonly IAwsStorageService  _awsStorageService;
     
-    public UploadPartHandler(IAwsStorageService  awsStorageService)
+    public UploadPartCommandHandler(IAwsStorageService  awsStorageService)
     {
         
         _awsStorageService= awsStorageService;

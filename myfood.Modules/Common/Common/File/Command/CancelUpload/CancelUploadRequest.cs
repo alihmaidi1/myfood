@@ -13,7 +13,7 @@ public class CancelUploadRequest
 }
 
 
-public class CancelUploadCommand:CancelUploadRequest,ICommand
+public sealed class CancelUploadCommand:CancelUploadRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

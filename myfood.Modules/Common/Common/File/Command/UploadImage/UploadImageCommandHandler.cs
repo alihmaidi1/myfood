@@ -5,11 +5,11 @@ using Shared.Domain.OperationResult;
 
 namespace Common.File.Command.UploadImage;
 
-public class UploadImageHandler: ICommandHandler<UploadImageCommand>
+internal sealed class UploadImageCommandHandler: ICommandHandler<UploadImageCommand>
 {
 
     private readonly IAwsStorageService _awsStorageService;
-    public UploadImageHandler(IAwsStorageService awsStorageService)
+    public UploadImageCommandHandler(IAwsStorageService awsStorageService)
     {
         _awsStorageService= awsStorageService;
         

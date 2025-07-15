@@ -6,12 +6,12 @@ using PartETag = Amazon.S3.Model.PartETag;
 
 namespace Common.File.Command.CompleteMultipartUpload;
 
-public class CompleteMultipartUploadHandler: ICommandHandler<CompleteMultipartUploadCommand>
+internal sealed class CompleteMultipartUploadCommandHandler: ICommandHandler<CompleteMultipartUploadCommand>
 {
     
     private readonly IAwsStorageService  _awsStorageService;
 
-    public CompleteMultipartUploadHandler(IAwsStorageService awsStorageService)
+    public CompleteMultipartUploadCommandHandler(IAwsStorageService awsStorageService)
     {
         
         _awsStorageService= awsStorageService;

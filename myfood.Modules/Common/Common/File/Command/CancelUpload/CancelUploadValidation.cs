@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Common.File.Command.CancelUpload;
 
-public class CancelUploadValidation: AbstractValidator<CancelUploadRequest>
+internal sealed class CancelUploadValidation: AbstractValidator<CancelUploadRequest>
 {
 
     public CancelUploadValidation()

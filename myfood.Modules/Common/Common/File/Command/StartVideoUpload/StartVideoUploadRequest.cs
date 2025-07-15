@@ -9,7 +9,7 @@ public class StartVideoUploadRequest
     
 }
 
-public class StartVideoUploadCommand: StartVideoUploadRequest,ICommand
+public sealed class StartVideoUploadCommand: StartVideoUploadRequest,ICommand
 {
     public Guid? RequestId { get; set; }
 }

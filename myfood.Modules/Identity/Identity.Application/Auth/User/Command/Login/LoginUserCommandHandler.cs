@@ -7,12 +7,12 @@ using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
-public class LoginUserHandler: ICommandHandler<LoginUserCommand>
+internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand>
 {
     
     private readonly UserManager<Domain.Security.User>  _userManager;
     private readonly IJwtRepository _jwtRepository;
-    public LoginUserHandler(UserManager<Domain.Security.User>  userManager,IJwtRepository jwtRepository)
+    public LoginUserCommandHandler(UserManager<Domain.Security.User>  userManager,IJwtRepository jwtRepository)
     {
         _userManager = userManager;
         _jwtRepository = jwtRepository;

@@ -3,7 +3,7 @@ using Shared.Domain.CQRS;
 
 namespace Identity.Application.EventHandlers;
 
-public class SendEmailEventHandler: IDomainEventHandler<SendEmailDomainEvent>
+internal sealed class SendEmailDomainEventHandler: IDomainEventHandler<SendEmailDomainEvent>
 {
     public Task Handle(SendEmailDomainEvent domainEvent, CancellationToken cancellationToken)
     {

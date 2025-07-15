@@ -8,13 +8,13 @@ using Shared.Domain.Services.Twilio;
 
 namespace Identity.Application.Auth.User.Command.ForgetPassword;
 
-public class ForgetPasswordHandler: ICommandHandler<ForgetPasswordCommand>
+internal sealed class ForgetPasswordCommandHandler: ICommandHandler<ForgetPasswordCommand>
 {
 
     private readonly UserManager<Domain.Security.User>  _userManager;
     // private readonly Iemailser  _smsTwilioService;
 
-    public ForgetPasswordHandler(UserManager<Domain.Security.User>  userManager,ISmsTwilioService  smsTwilioService)
+    public ForgetPasswordCommandHandler(UserManager<Domain.Security.User>  userManager,ISmsTwilioService  smsTwilioService)
     {
         _userManager = userManager;
         // _smsTwilioService = smsTwilioService;

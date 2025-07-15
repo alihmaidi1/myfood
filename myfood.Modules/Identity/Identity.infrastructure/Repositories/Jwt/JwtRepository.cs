@@ -28,11 +28,7 @@ public class JwtRepository: IJwtRepository
            
         string token = GetToken(id,email,type,permissions);
         string refreshToken = GenerateRefreshToken();
-        _context.RefreshTokens.Add(new RefreshToken()
-        {
-            
-            Value = refreshToken
-        });
+        _context.RefreshTokens.Add(RefreshToken.Create(refreshToken).Value!);
         await _context.SaveChangesAsync(cancellationToken);
         
         return new TokenInfo(token,refreshToken,DateTime.Now.AddMinutes(_jwtOption.DurationInMinute));
