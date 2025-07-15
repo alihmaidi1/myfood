@@ -5,46 +5,25 @@ using Shared.Domain.CQRS;
 using Shared.Domain.OperationResult;
 
 namespace Shared.Application.Decorator;
-
-public static class ValidationDecorator
+public class ValidationDecorator<TRequest, THandler>(
+    THandler innerHandler,
+    IEnumerable<IValidator<TRequest>> validators)
+    : IRequestHandler<TRequest>
+    where TRequest : IRequest
+    where THandler : IRequestHandler<TRequest>
 {
-    public  class CommandHandler<TCommand>(IRequestHandler<TCommand> innerHandler,
-    IEnumerable<IValidator<TCommand>> validators) : ICommandHandler<TCommand>
-    where TCommand : ICommand
+
+
+    public async Task<IResult> Handle(TRequest request, CancellationToken cancellationToken)
     {
-
-
-        public async Task<IResult> Handle(TCommand request, CancellationToken cancellationToken)
+        var validationFailures = await ValidateAsync(request, validators);
+        if (validationFailures == null)
         {
-            var validationFailures = await ValidateAsync(request, validators);
-            if (validationFailures == null)
-            {
-                return await innerHandler.Handle(request, cancellationToken);
-            }
-            return Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToActionResult();
-
+            return await innerHandler.Handle(request, cancellationToken);
         }
+        return Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToActionResult();
+
     }
-
-
-    public sealed class QueryHandler<TQuery>(IQueryHandler<TQuery> innerHandler,
-    IEnumerable<IValidator<TQuery>> validators) : IQueryHandler<TQuery>
-    where TQuery : IQuery 
-    {
-        public async Task<IResult> Handle(TQuery request, CancellationToken cancellationToken)
-        {
-            var validationFailures = await ValidateAsync(request, validators);
-            if (validationFailures == null)
-            {
-                return await innerHandler.Handle(request, cancellationToken);
-            }
-            return  Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToActionResult();
-    
-        }
-    }
-
-
-
 
 
 
@@ -81,6 +60,4 @@ public static class ValidationDecorator
     }
 
 
-
-    
 }

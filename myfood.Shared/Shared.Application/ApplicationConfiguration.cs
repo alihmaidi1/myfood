@@ -41,11 +41,12 @@ public static class ApplicationConfiguration
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             
 
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator.QueryHandler<>));
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator.QueryHandler<>));
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator.CommandHandler<>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator<,>));
+        services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator<,>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator<>));
+        services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator<>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator<>));
+ 
         services.AddValidatorsFromAssemblies(moduleAssemblies);
         
         #endregion
