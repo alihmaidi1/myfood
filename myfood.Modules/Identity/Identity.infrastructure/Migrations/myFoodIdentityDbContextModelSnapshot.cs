@@ -109,6 +109,9 @@ namespace Identity.infrastructure.Migrations
                     b.Property<string>("ForgetCode")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("ForgetDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("timestamp with time zone");
 

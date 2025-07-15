@@ -1,6 +1,6 @@
+using Identity.Domain.Repository;
 using Identity.Domain.Security;
-using Microsoft.EntityFrameworkCore;
-using Shared.DDD.Base.Repository;
+using Shared.Infrastructure.Repositories;
 
 namespace Identity.infrastructure.Repositories;
 

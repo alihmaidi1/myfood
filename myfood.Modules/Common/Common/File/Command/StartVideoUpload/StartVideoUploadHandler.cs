@@ -1,7 +1,8 @@
+using Common.Services.File;
 using Microsoft.AspNetCore.Http;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.File;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
+
 
 namespace Common.File.Command.StartVideoUpload;
 
@@ -17,7 +18,7 @@ public class StartVideoUploadHandler: ICommandHandler<StartVideoUploadCommand>
     public async Task<IResult> Handle(StartVideoUploadCommand request, CancellationToken cancellationToken)
     {
         var uploadResult=await _awsStorageService.InitiateChunkedVideoUpload(request.Video);
-        return Result.SuccessResult(uploadResult.Value);
+        return Result.Success(uploadResult.Value).ToActionResult();
         
     }
 }

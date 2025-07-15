@@ -2,7 +2,6 @@ using Identity.Domain.Enum;
 using Identity.Domain.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Shared.Authorization;
 
 namespace Identity.infrastructure.Seed;
 

@@ -1,7 +1,8 @@
+using Common.Services.File;
 using Microsoft.AspNetCore.Http;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.File;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
+
 
 namespace Common.File.Command.CancelUpload;
 
@@ -18,6 +19,6 @@ public class CancelUploadHandler: ICommandHandler<CancelUploadCommand>
     public async Task<IResult> Handle(CancelUploadCommand request, CancellationToken cancellationToken)
     {
         await _awsStorageService.AbortMultipartUploadAsync(request.UploadId, request.FileName);
-        return Result.SuccessResult(true);
+        return Result.Success(true).ToActionResult();
     }
 }

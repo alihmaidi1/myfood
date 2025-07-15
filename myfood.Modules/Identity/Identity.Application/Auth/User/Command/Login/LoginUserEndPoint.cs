@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 

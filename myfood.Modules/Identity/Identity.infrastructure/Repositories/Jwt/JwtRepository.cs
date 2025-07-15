@@ -2,11 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Identity.Domain.Repository;
 using Identity.Domain.Security;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Authorization;
-using Shared.Security.Jwt;
+using Shared.Infrastructure.Security.Jwt;
 
 namespace Identity.infrastructure.Repositories.Jwt;
 
@@ -35,13 +35,7 @@ public class JwtRepository: IJwtRepository
         });
         await _context.SaveChangesAsync(cancellationToken);
         
-        return new TokenInfo
-        {
-            Token = token,
-            RefreshToken = refreshToken,
-            ExpiresIn = DateTime.Now.AddMinutes(_jwtOption.DurationInMinute)
-
-        };
+        return new TokenInfo(token,refreshToken,DateTime.Now.AddMinutes(_jwtOption.DurationInMinute));
     }
 
 

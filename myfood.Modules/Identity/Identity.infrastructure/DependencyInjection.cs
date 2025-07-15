@@ -1,3 +1,4 @@
+using Identity.Domain.Repository;
 using Identity.Domain.Security;
 using Identity.infrastructure.Repositories;
 using Identity.infrastructure.Repositories.Jwt;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using myfood.Messages.Outbox;
-using Shared.Services.Archive;
 
 namespace Identity.infrastructure;
 

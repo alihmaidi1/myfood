@@ -1,20 +1,10 @@
-
-using Api.JwtConfiguration;
-
-using Identity.Application;
-using Identity.infrastructure;
-using myfood.Messages.Extensions;
-using Notification;
-using Serilog;
-using Shared;
-using Shared.Middleware;
+using Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddControllers();
 var allAssembly = AppDomain.CurrentDomain.GetAssemblies();
 
 
@@ -28,18 +18,24 @@ builder.Services.AddOpenApi(options =>
 });
 
 
-builder.Services.AddShared(builder.Configuration,allAssembly);
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication(allAssembly);
+builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
 
-builder.Services.AddIdentityApplicationModules(builder.Configuration);
-builder.Services.AddIdentityInfrastructureModule(builder.Configuration);
+builder.Services
+    .AddIdentityApplicationModules(builder.Configuration)
+    .AddIdentityInfrastructureModule(builder.Configuration)
+    .AddCommonApplication();
+
 
 builder.Services.AddNotificationModule(builder.Configuration);
 
 var app = builder.Build();
 
 app.MapOpenApi();
-app.UseShared()
+app.UseInfrastructure()
+    .UseApplication()
     .UseIdentityApplicationModule()
     .UseIdentityInfrastructureModule()
     .UseNotificationModule();

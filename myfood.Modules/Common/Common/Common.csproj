@@ -8,10 +8,11 @@
 
     <ItemGroup>
       <Folder Include="File\Query\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\myfood.Shared\Shared\Shared.csproj" />
+      <ProjectReference Include="..\..\..\myfood.Shared\Shared.Application\Shared.Application.csproj" />
     </ItemGroup>
 
 

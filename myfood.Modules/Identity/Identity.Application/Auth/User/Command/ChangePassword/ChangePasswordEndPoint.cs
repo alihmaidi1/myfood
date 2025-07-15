@@ -1,14 +1,11 @@
-using System.Data;
 using Carter;
 using Mapster;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.ChangePassword;
 

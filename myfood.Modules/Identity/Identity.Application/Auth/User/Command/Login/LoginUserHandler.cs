@@ -1,10 +1,9 @@
+using Identity.Domain.Repository;
 using Identity.Domain.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Shared.Authorization;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
@@ -22,27 +21,22 @@ public class LoginUserHandler: ICommandHandler<LoginUserCommand>
     
     public async Task<IResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var user=await _userManager.FindByEmailAsync(request.Email);
-        if (user == null)
+        var user=await _userManager.FindByEmailAsync(request.Email).WaitAsync(cancellationToken);
+        var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password).WaitAsync(cancellationToken);
+        if (user is null||!passwordValid)
         {
+            return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid.")).ToActionResult();
             
-            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid."));
         }
 
         if (!user.EmailConfirmed)
         {
-            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("your email is not confirmed"));
-            
-        }
-        var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
-        if (!passwordValid)
-        {
-            return Result.ValidationFailureResult<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid."));
+            return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("your email is not confirmed")).ToActionResult();
             
         }
 
         var result = await _jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Customer,cancellationToken);
         
-        return Result.SuccessResult(result);
+        return Result.Success(result).ToActionResult();
     }
 }

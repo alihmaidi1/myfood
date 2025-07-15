@@ -1,7 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Shared.Contract.CQRS;
+using Shared.Domain.CQRS;
 
 namespace Common.File.Command.UploadPart;
 

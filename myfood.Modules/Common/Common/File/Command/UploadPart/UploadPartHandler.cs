@@ -1,7 +1,8 @@
+using Common.Services.File;
 using Microsoft.AspNetCore.Http;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.File;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
+
 
 namespace Common.File.Command.UploadPart;
 
@@ -24,6 +25,6 @@ public class UploadPartHandler: ICommandHandler<UploadPartCommand>
             request.fileName,
             request.partNumber,
             stream);
-        return Result.SuccessResult(uploadResult);
+        return Result.Success(uploadResult).ToActionResult();
     }
 }

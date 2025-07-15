@@ -1,8 +1,7 @@
-using Amazon.S3.Model;
+using Common.Services.File;
 using Microsoft.AspNetCore.Http;
-using Shared.Contract.CQRS;
-using Shared.OperationResult;
-using Shared.Services.File;
+using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 using PartETag = Amazon.S3.Model.PartETag;
 
 namespace Common.File.Command.CompleteMultipartUpload;
@@ -25,6 +24,6 @@ public class CompleteMultipartUploadHandler: ICommandHandler<CompleteMultipartUp
             PartNumber = x.PartNumber,
             
         }).ToList());
-        return Result.SuccessResult(true);
+        return Result.Success(true).ToActionResult();
     }
 }
