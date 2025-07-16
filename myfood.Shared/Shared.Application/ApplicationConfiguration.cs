@@ -42,15 +42,7 @@ public static class ApplicationConfiguration
                 
         );
         services.AddScoped<IDispatcher, Dispatcher>();
-
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-
-        // services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator<,>));
-        // services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator<,>));
-        // services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator<>));
-        // services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator<>));
-        // services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator<>));
-        //
         services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
         
         

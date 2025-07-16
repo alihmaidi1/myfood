@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Domain.CQRS;
+using Shared.Domain.Services;
 
 namespace Identity.Application;
 
@@ -13,7 +14,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddIdentityApplicationModules(this IServiceCollection services, IConfiguration configuration)
     {
-        
+
         return services;
     }
 
