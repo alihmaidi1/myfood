@@ -33,13 +33,17 @@ public static class ApplicationConfiguration
                 .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
+                .AddClasses(classes => classes.AssignableTo(typeof(IPipelineBehavior<,>)), publicOnly: false)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
                 
         );
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IDispatcher, Dispatcher>();
+
+        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
         // services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator<,>));
         // services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator<,>));
@@ -47,7 +51,8 @@ public static class ApplicationConfiguration
         // services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator<>));
         // services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator<>));
         //
-        services.AddValidatorsFromAssemblies(moduleAssemblies);
+        services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
+        
         
         #endregion
 

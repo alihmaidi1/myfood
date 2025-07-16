@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
-internal sealed class LoginUserValidation: AbstractValidator<LoginUserRequest>
+internal sealed class LoginUserValidation: AbstractValidator<LoginUserCommand>
 {
 
     public LoginUserValidation()

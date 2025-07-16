@@ -29,6 +29,8 @@ internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand,
             
         }
 
+        
+        
         if (!user.EmailConfirmed)
         {
             return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("your email is not confirmed")).ToActionResult();

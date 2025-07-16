@@ -1,3 +1,4 @@
+using FluentValidation;
 using Identity.Application.Auth.User.Command.Login;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddIdentityApplicationModules(this IServiceCollection services, IConfiguration configuration)
     {
+        
         return services;
     }
 
