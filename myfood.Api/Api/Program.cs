@@ -1,4 +1,6 @@
 using Common;
+using Shared.Domain.Services;
+using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,7 @@ builder.Services.AddOpenApi(options =>
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
 
 });
+
 
 
 builder.Services.AddInfrastructure(builder.Configuration);

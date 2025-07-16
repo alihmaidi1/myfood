@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Shared.Domain.CQRS;
 using Shared.Domain.OperationResult;
+using Shared.Domain.Services;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
@@ -12,9 +13,11 @@ internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand,
     
     private readonly UserManager<Domain.Security.User>  _userManager;
     private readonly IJwtRepository _jwtRepository;
-    public LoginUserCommandHandler(UserManager<Domain.Security.User>  userManager,IJwtRepository jwtRepository)
+    private readonly IUnitOfWork  _unitOfWork;
+    public LoginUserCommandHandler(IUnitOfWork  unitOfWork,UserManager<Domain.Security.User>  userManager,IJwtRepository jwtRepository)
     {
         _userManager = userManager;
+        _unitOfWork=unitOfWork;
         _jwtRepository = jwtRepository;
 
     }
@@ -38,7 +41,7 @@ internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand,
         }
 
         var result = await _jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Customer,cancellationToken);
-        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success(result).ToActionResult();
     }
 }
