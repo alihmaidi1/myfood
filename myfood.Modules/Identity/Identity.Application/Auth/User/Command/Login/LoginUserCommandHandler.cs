@@ -7,7 +7,7 @@ using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
-internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand>
+internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand,IResult>
 {
     
     private readonly UserManager<Domain.Security.User>  _userManager;
