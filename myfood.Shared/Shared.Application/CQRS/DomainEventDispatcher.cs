@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Domain.CQRS;
 
@@ -6,61 +7,50 @@ namespace Shared.Application.CQRS;
 
 public class DomainEventDispatcher(IServiceProvider serviceProvider) : IDomainEventDispatcher
 {
-    
-    private static readonly ConcurrentDictionary<Type, Type> HandlerTypeDictionary = new();
-    private static readonly ConcurrentDictionary<Type, Type> WrapperTypeDictionary = new();
+    private static readonly ConcurrentDictionary<Type, Type> _handlerTypeCache = new();
+    private static readonly ConcurrentDictionary<Type, MethodInfo> _handleMethodCache = new();
+
     public async Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
     {
-        foreach (var domainEvent in domainEvents)
-        {
-            using IServiceScope scope = serviceProvider.CreateAsyncScope();
-            var domainEventType = domainEvent.GetType();
-            Type handlerType = HandlerTypeDictionary.GetOrAdd(
-                domainEventType,
-                et => typeof(IDomainEventHandler<>).MakeGenericType(et));
-            IEnumerable<object?> handlers = scope.ServiceProvider.GetServices(handlerType);
-
-
-
-            foreach (var handler in handlers)
-            {
-                if (handler is null) continue;
-
-                var handlerWrapper = HandlerWrapper.Create(handler, domainEventType);
-                await handlerWrapper.Handle(domainEvent, cancellationToken);
-            }
-
-        }
+        // معالجة الأحداث بشكل متوازي إذا كانت مستقلة
+        var dispatchTasks = domainEvents.Select(e => DispatchEventAsync(e, cancellationToken));
+        await Task.WhenAll(dispatchTasks);
     }
-    
-    private abstract class HandlerWrapper
+
+    private async Task DispatchEventAsync(IDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        public abstract Task Handle(IDomainEvent domainEvent, CancellationToken cancellationToken);
-        public static HandlerWrapper Create(object handler, Type domainEventType)
-        {
+        using var scope = serviceProvider.CreateAsyncScope();
+        var eventType = domainEvent.GetType();
+        
+        // الحصول على نوع الـ handler مع التخزين المؤقت
+        var handlerType = _handlerTypeCache.GetOrAdd(
+            eventType,
+            t => typeof(IDomainEventHandler<>).MakeGenericType(t));
 
-            Type wrapperType = WrapperTypeDictionary.GetOrAdd(
-                domainEventType,
-                et => typeof(HandlerWrapper<>).MakeGenericType(et));
+        var handlers = scope.ServiceProvider.GetServices(handlerType);
 
+        // تنفيذ جميع الـ handlers بشكل متوازي إذا كانت مستقلة
+        var handleTasks = handlers
+            .Where(handler => handler != null)
+            .Select(handler => HandleSingleEventAsync(handler, domainEvent, cancellationToken));
 
-            return (HandlerWrapper)Activator.CreateInstance(wrapperType, handler)!;
-        }
+        await Task.WhenAll(handleTasks);
     }
 
-    private class HandlerWrapper<T>(object handler) : HandlerWrapper where T : IDomainEvent
+    private async Task HandleSingleEventAsync(object handler, IDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-
-        private readonly IDomainEventHandler<T> _handler = (IDomainEventHandler<T>)handler;
-
-        public override async Task Handle(IDomainEvent domainEvent, CancellationToken cancellationToken)
+        try
         {
+            var handleMethod = _handleMethodCache.GetOrAdd(
+                handler.GetType(),
+                t => t.GetMethod("Handle") ?? throw new InvalidOperationException("Handle method not found"));
 
-            await _handler.Handle((T)domainEvent, cancellationToken);
+            await (Task)handleMethod.Invoke(handler, new object[] { domainEvent, cancellationToken })!;
+        }
+        catch (Exception ex)
+        {
+            // يمكنك إضافة logging هنا
+            throw new InvalidOperationException($"Error handling event {domainEvent.GetType().Name}", ex);
         }
     }
-
-    
-    
-
 }

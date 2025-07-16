@@ -110,12 +110,10 @@ public class ApplicationTests: CommonApplicationTests
     }
     
     
-    
-    
     [Fact]
     public void DomainEventHandler_ShouldHave_NameEndingWith_DomainEventHandler()
     {
-        AssertDomainEventHandlersShouldHaveNameEndingWithDomainEventHandler(ApplicationAssembly);
+        AssertDomainEventHandlersShouldHavseNameEndingWithDomainEventHandler(ApplicationAssembly);
     }
 
 

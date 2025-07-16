@@ -14,11 +14,11 @@ public class LoginUserEndPoint: ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/users/login", 
-                async ([FromBody]  LoginUserRequest request,[FromHeader]Guid RequestId,ICommandHandler<LoginUserCommand> handler,CancellationToken cancellationToken) =>
+                async ([FromBody]  LoginUserRequest request,[FromHeader]Guid RequestId,IDispatcher  dispatcher,CancellationToken cancellationToken) =>
                 {
                     LoginUserCommand command = request.Adapt<LoginUserCommand>();
                     command.RequestId = RequestId;
-                    var result=await handler.Handle(command, cancellationToken);
+                    var result=await dispatcher.Send(command, cancellationToken);
                     return result;
                 })
             .Produces<TResult<LoginUserResponse>>(StatusCodes.Status201Created)

@@ -4,7 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Application.CQRS;
-using Shared.Application.Decorator;
+// using Shared.Application.Decorator;
 using Shared.Application.Services.User;
 using Shared.Application.Versioning;
 using Shared.Domain.CQRS;
@@ -30,7 +30,10 @@ public static class ApplicationConfiguration
         #region CQRS_Abstraction
         services.Scan(scan =>
             scan.FromAssemblies(moduleAssemblies)
-                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<>)), publicOnly: false)
+                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+                .AddClasses(classes => classes.AssignableTo(typeof(IPipelineBehavior<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
@@ -38,15 +41,18 @@ public static class ApplicationConfiguration
                 .WithScopedLifetime()
                 
         );
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-            
+        services.AddScoped<IDispatcher, Dispatcher>();
 
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator.QueryHandler<>));
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandHandler<>));
-        services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator.QueryHandler<>));
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator.CommandHandler<>));
-        services.AddValidatorsFromAssemblies(moduleAssemblies);
+        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+
+        // services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator<,>));
+        // services.TryDecorate(typeof(IQueryHandler<>), typeof(ValidationDecorator<,>));
+        // services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator<>));
+        // services.TryDecorate(typeof(IQueryHandler<>), typeof(LoggingDecorator<>));
+        // services.TryDecorate(typeof(ICommandHandler<>), typeof(IdempotencyDecorator<>));
+        //
+        services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
+        
         
         #endregion
 

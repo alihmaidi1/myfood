@@ -12,11 +12,12 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(ICommand))
+            .ImplementInterface(typeof(ICommand<>))
             .Should()
             .BeSealed()
             .GetResult()
             .ShouldBeSuccessful();
+        
     }
     
     
@@ -24,7 +25,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(ICommand))
+            .ImplementInterface(typeof(ICommand<>))
             .Should()
             .HaveNameEndingWith("Command")
             .GetResult()
@@ -35,7 +36,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(ICommandHandler<>))
+            .ImplementInterface(typeof(ICommandHandler<,>))
             .Should()
             .NotBePublic()
             .GetResult()
@@ -47,7 +48,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(ICommandHandler<>))
+            .ImplementInterface(typeof(ICommandHandler<,>))
             .Should()
             .BeSealed()
             .GetResult()
@@ -59,7 +60,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(ICommandHandler<>))
+            .ImplementInterface(typeof(ICommandHandler<,>))
             .Should()
             .HaveNameEndingWith("CommandHandler")
             .GetResult()
@@ -71,19 +72,19 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IQuery))
+            .ImplementInterface(typeof(IQuery<>))
             .Should()
             .BeSealed()
             .GetResult()
             .ShouldBeSuccessful();
     }
-
+    
     
     protected static void AssertQueriesShouldHaveNameEndingWithQuery(Assembly applicationAssembly)
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IQuery))
+            .ImplementInterface(typeof(IQuery<>))
             .Should()
             .HaveNameEndingWith("Query")
             .GetResult()
@@ -95,7 +96,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IQueryHandler<>))
+            .ImplementInterface(typeof(IQueryHandler<,>))
             .Should()
             .NotBePublic()
             .GetResult()
@@ -107,7 +108,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IQueryHandler<>))
+            .ImplementInterface(typeof(IQueryHandler<,>))
             .Should()
             .BeSealed()
             .GetResult()
@@ -119,7 +120,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IQueryHandler<>))
+            .ImplementInterface(typeof(IQueryHandler<,>))
             .Should()
             .HaveNameEndingWith("QueryHandler")
             .GetResult()
@@ -188,7 +189,7 @@ public abstract class CommonApplicationTests
     }
     
     
-    protected static void AssertDomainEventHandlersShouldHaveNameEndingWithDomainEventHandler(Assembly applicationAssembly)
+    protected static void AssertDomainEventHandlersShouldHavseNameEndingWithDomainEventHandler(Assembly applicationAssembly)
     {
         Types.InAssembly(applicationAssembly)
             .That()
