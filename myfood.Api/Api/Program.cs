@@ -1,7 +1,3 @@
-using Common;
-using Shared.Domain.Services;
-using Shared.Infrastructure.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) =>

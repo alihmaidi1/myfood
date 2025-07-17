@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using myfood.Messages.Outbox;
-using Shared.Domain.Services;
-using Shared.Infrastructure.Services;
+using Shared.Infrastructure.BackgroundJobs;
+using Shared.Infrastructure.Database;
 
 namespace Identity.infrastructure;
 
@@ -36,13 +35,7 @@ public static class DependencyInjection
             .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
-        services.AddDbContext<myFoodIdentityDbContext>(option =>
-        {
-            option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-            
-            option.EnableSensitiveDataLogging();
-
-        });
+        services.AddDbContext<myFoodIdentityDbContext>(Postgres.StandardOptions(configuration, Schemas.Identity));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         services.AddHostedService<OutboxProcessor<myFoodIdentityDbContext>>();

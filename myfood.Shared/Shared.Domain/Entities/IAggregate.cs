@@ -4,8 +4,7 @@ namespace Shared.Domain.Entities;
 
 public interface IAggregate: IEntity
 {
-    public List<IDomainEvent> _domainEvents { get; }
-
+    public List<IDomainEvent> GetDomainEvents();
     
     IDomainEvent[] ClearDomainEvents();
     public void RaiseDomainEvent(IDomainEvent domainEvent);

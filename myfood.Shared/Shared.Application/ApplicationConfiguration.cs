@@ -42,7 +42,7 @@ public static class ApplicationConfiguration
                 
         );
         services.AddScoped<IDispatcher, Dispatcher>();
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
         
         

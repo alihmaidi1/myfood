@@ -3,6 +3,7 @@ using System;
 using Identity.infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Identity.infrastructure.Migrations
 {
     [DbContext(typeof(myFoodIdentityDbContext))]
-    partial class myFoodIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250717074633_outboxmessage")]
+    partial class outboxmessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
