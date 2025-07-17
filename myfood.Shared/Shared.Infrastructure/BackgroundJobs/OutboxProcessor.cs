@@ -43,10 +43,8 @@ public class OutboxProcessor<TContext>
                             logger.LogWarning("Could not deserialize message: {Content}", message.Content);
                             continue;
                         }
-                        var domainevents=new List<IDomainEvent>();
-                        domainevents.Add(domainEvent);
 
-                        await bus.DispatchAsync(domainevents,CancellationToken.None);
+                        await bus.DispatchAsync(domainEvent,CancellationToken.None);
 
                         message.ProcessedOn = DateTime.UtcNow;
 

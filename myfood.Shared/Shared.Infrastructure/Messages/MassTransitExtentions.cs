@@ -3,7 +3,7 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shared.Application.Messages;
+namespace Shared.Infrastructure.Messages;
 
 public static class MassTransitExtentions
 {

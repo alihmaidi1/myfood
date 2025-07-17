@@ -7,4 +7,3 @@ global using Serilog;
 global using Shared.Application;
 global using Shared.Infrastructure;
 global using Common;
-global using Shared.Application.Messages;

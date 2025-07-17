@@ -23,6 +23,8 @@ public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
         
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         builder.ApplyConfiguration(new OutboxMessageConfiguration());
+        builder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
+
         base.OnModelCreating(builder);
 
     }

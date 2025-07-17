@@ -1,3 +1,5 @@
+using Shared.Infrastructure.Messages;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) =>
