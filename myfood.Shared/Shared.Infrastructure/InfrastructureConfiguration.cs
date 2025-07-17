@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Refit;
+using Shared.Domain.CQRS;
 using Shared.Domain.Services;
 using Shared.Domain.Services.Email;
 using Shared.Domain.Services.Twilio;
 using Shared.Infrastructure.Extensions;
+using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Messages;
 using Shared.Infrastructure.Security;
 using Shared.Infrastructure.Security.Jwt;
 using Shared.Infrastructure.Services;
@@ -59,6 +63,7 @@ public static class InfrastructureConfiguration
             .BindConfiguration("Whatsapp")
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
 
 
 

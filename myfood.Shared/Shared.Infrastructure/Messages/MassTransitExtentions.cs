@@ -2,13 +2,11 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using myfood.Messages.Outbox;
 
-namespace myfood.Messages.Extensions;
+namespace Shared.Infrastructure.Messages;
 
 public static class MassTransitExtentions
 {
-    
     public static IServiceCollection AddMassTransitWithAssemblies
         (this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
     {
@@ -16,18 +14,15 @@ public static class MassTransitExtentions
         {
             config.SetKebabCaseEndpointNameFormatter();
 
-            // config.SetInMemorySagaRepositoryProvider();
-
             config.AddConsumers(assemblies);
-            // config.AddSagaStateMachines(assemblies);
-            // config.AddSagas(assemblies);
             config.AddActivities(assemblies);
             
             config.UsingInMemory((context, configurator) =>configurator.ConfigureEndpoints(context));
             
         });
-        services.TryDecorate(typeof(IConsumer<>), typeof(IdempotencyIntegrationEventHandler<,>));
+        // services.TryDecorate(typeof(IConsumer<>), typeof(IdempotencyIntegrationEventHandler<,>));
         return services;
     }
+
     
 }

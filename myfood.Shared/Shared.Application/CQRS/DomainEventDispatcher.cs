@@ -10,11 +10,10 @@ public class DomainEventDispatcher(IServiceProvider serviceProvider) : IDomainEv
     private static readonly ConcurrentDictionary<Type, Type> _handlerTypeCache = new();
     private static readonly ConcurrentDictionary<Type, MethodInfo> _handleMethodCache = new();
 
-    public async Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+    public async Task DispatchAsync(IDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        // معالجة الأحداث بشكل متوازي إذا كانت مستقلة
-        var dispatchTasks = domainEvents.Select(e => DispatchEventAsync(e, cancellationToken));
-        await Task.WhenAll(dispatchTasks);
+        await DispatchEventAsync(domainEvent, cancellationToken);
+        
     }
 
     private async Task DispatchEventAsync(IDomainEvent domainEvent, CancellationToken cancellationToken)

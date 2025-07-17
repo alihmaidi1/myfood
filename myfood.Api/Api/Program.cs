@@ -1,6 +1,4 @@
-using Common;
-using Shared.Domain.Services;
-using Shared.Infrastructure.Services;
+using Shared.Infrastructure.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
 

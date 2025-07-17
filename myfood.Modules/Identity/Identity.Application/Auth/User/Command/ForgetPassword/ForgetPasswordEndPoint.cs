@@ -7,24 +7,27 @@ using Microsoft.AspNetCore.Routing;
 using Shared.Domain.CQRS;
 using Shared.Domain.OperationResult;
 
-namespace Identity.Application.Auth.User.Command.Login;
+namespace Identity.Application.Auth.User.Command.ForgetPassword;
 
-public class LoginUserEndPoint: ICarterModule
+public class ForgetPasswordEndPoint: ICarterModule
 {
+    
+    
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/users/login", 
-                async ([FromBody]  LoginUserRequest request,[FromHeader]Guid RequestId,IDispatcher  dispatcher,CancellationToken cancellationToken) =>
+        
+        app.MapPost("/users/forgetPassword", 
+                async ([FromBody]  ForgetPasswordRequest request,[FromHeader]Guid RequestId,IDispatcher  dispatcher,CancellationToken cancellationToken) =>
                 {
-                    LoginUserCommand command = request.Adapt<LoginUserCommand>();
+                    ForgetPasswordCommand command = request.Adapt<ForgetPasswordCommand>();
                     command.RequestId = RequestId;
                     var result=await dispatcher.Send(command, cancellationToken);
                     return result;
                 })
-            .Produces<TResult<LoginUserResponse>>(StatusCodes.Status201Created)
+            .Produces<TResult<bool>>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithTags("UserAuthentication")
-            .WithSummary("login user to website")
-            .WithDescription("login user to website");
+            .WithSummary("user forget password")
+            .WithDescription("user forget password");
     }
 }

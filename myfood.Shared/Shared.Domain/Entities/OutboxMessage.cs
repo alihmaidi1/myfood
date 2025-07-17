@@ -1,6 +1,6 @@
-namespace myfood.Messages.Outbox;
+namespace Shared.Domain.Entities;
 
-public class OutboxMessage
+public sealed class OutboxMessage
 {
     public Guid Id { get; set; }
     public string Type { get; set; }

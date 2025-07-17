@@ -56,7 +56,9 @@ public class User: IdentityUser<Guid>, IAggregate
         
     }
 
-    public List<IDomainEvent> _domainEvents { get; } = new List<IDomainEvent>();
+    private List<IDomainEvent> _domainEvents { get; } = new List<IDomainEvent>();
+    public List<IDomainEvent> GetDomainEvents() => _domainEvents.ToList();
+
     public IDomainEvent[] ClearDomainEvents()
     {
         

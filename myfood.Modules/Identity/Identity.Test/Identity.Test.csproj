@@ -24,4 +24,8 @@
       <ProjectReference Include="..\..\..\myfood.Api\Api\Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UnitTest\" />
+    </ItemGroup>
+
 </Project>

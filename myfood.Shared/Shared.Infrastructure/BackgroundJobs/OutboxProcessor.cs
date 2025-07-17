@@ -4,11 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Shared.Domain.CQRS;
+using Shared.Domain.Entities;
+using Shared.Infrastructure.Serialization;
 
-namespace myfood.Messages.Outbox;
+namespace Shared.Infrastructure.BackgroundJobs;
 
 public class OutboxProcessor<TContext>
-    (IServiceProvider serviceProvider, IBus bus, ILogger<OutboxProcessor<TContext>> logger)
+    (IServiceProvider serviceProvider, IDomainEventDispatcher bus, ILogger<OutboxProcessor<TContext>> logger)
     : BackgroundService where TContext : DbContext
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -32,14 +36,15 @@ public class OutboxProcessor<TContext>
                             logger.LogWarning("Could not resolve type: {Type}", message.Type);
                             continue;
                         }
-                        var eventMessage = JsonSerializer.Deserialize(message.Content, eventType);
-                        if (eventMessage == null)
+                        var domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(message.Content, SerializerSettings.Instance)!;
+                
+                        if (domainEvent == null)
                         {
                             logger.LogWarning("Could not deserialize message: {Content}", message.Content);
                             continue;
                         }
 
-                        await bus.Publish(eventMessage, stoppingToken);
+                        await bus.DispatchAsync(domainEvent,CancellationToken.None);
 
                         message.ProcessedOn = DateTime.UtcNow;
 

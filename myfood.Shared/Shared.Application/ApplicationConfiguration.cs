@@ -4,7 +4,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Application.CQRS;
-// using Shared.Application.Decorator;
 using Shared.Application.Services.User;
 using Shared.Application.Versioning;
 using Shared.Domain.CQRS;
@@ -42,7 +41,10 @@ public static class ApplicationConfiguration
                 
         );
         services.AddScoped<IDispatcher, Dispatcher>();
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+
+        // services.TryDecorate(typeof());
+        
         services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
         
         

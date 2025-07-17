@@ -1,5 +1,6 @@
 using Identity.Domain.Repository;
 using Identity.Domain.Security;
+using Identity.infrastructure.Messages;
 using Identity.infrastructure.Repositories;
 using Identity.infrastructure.Repositories.Jwt;
 using Identity.infrastructure.Seed;
@@ -8,9 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using myfood.Messages.Outbox;
-using Shared.Domain.Services;
-using Shared.Infrastructure.Services;
+using Shared.Domain.CQRS;
+using Shared.Infrastructure.BackgroundJobs;
+using Shared.Infrastructure.Database;
+using Shared.Infrastructure.Messages;
 
 namespace Identity.infrastructure;
 
@@ -36,16 +38,10 @@ public static class DependencyInjection
             .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
-        services.AddDbContext<myFoodIdentityDbContext>(option =>
-        {
-            option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-            
-            option.EnableSensitiveDataLogging();
-
-        });
+        services.AddDbContext<myFoodIdentityDbContext>(Postgres.StandardOptions(configuration, Schemas.Identity));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
         services.AddHostedService<OutboxProcessor<myFoodIdentityDbContext>>();
+        services.TryDecorate(typeof(IDomainEventHandler<>),typeof(IdempotentIdentityDomainEventHandler<>));
         return services;
     }
     

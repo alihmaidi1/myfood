@@ -1,11 +1,6 @@
-using FluentValidation;
-using Identity.Application.Auth.User.Command.Login;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Domain.CQRS;
-using Shared.Domain.Services;
 
 namespace Identity.Application;
 
@@ -15,6 +10,8 @@ public static class DependencyInjection
     public static IServiceCollection AddIdentityApplicationModules(this IServiceCollection services, IConfiguration configuration)
     {
 
+        // services.TryDecorate(typeof(IDomainEventHandler<>), typeof(IdempotentDomainEventHandler<>));
+        
         return services;
     }
 

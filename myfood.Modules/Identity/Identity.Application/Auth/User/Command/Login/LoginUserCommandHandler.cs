@@ -31,8 +31,6 @@ internal sealed class LoginUserCommandHandler: ICommandHandler<LoginUserCommand,
             return Result.ValidationFailure<LoginUserResponse>(Error.ValidationFailures("Email or Password is not valid.")).ToActionResult();
             
         }
-
-        
         
         if (!user.EmailConfirmed)
         {
