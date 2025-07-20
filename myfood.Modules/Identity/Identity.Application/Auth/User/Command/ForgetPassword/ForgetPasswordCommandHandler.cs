@@ -23,25 +23,39 @@ internal sealed class ForgetPasswordCommandHandler: ICommandHandler<ForgetPasswo
     }
     public async Task<IResult> Handle(ForgetPasswordCommand request, CancellationToken cancellationToken)
     {
-        var user=await _userManager.FindByEmailAsync(request.Email);
-        if (user == null)
-        {
-            
-            return Result.ValidationFailure<bool>(Error.ValidationFailures("Email or Password is not valid.")).ToActionResult();
-        }
-        var result=user.SetForgetCode(string.Empty.GenerateRandomString(5),5);
-        if (result.IsFailure)
-        {
-            return result.ToActionResult();
-        }
-        var _identityResult = await _userManager.UpdateAsync(user);
-        if (!_identityResult.Succeeded)
-        {
-            return Result.InternalError<bool>(Error.Internal(_identityResult.Errors.First().Description)).ToActionResult();
-            
-        }
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result.Success(true).ToActionResult();
+        // await using var transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        //
+        // try
+        // {
+            var user=await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+            
+                return Result.ValidationFailure<bool>(Error.ValidationFailures("Email or Password is not valid.")).ToActionResult();
+            }
+            var result=user.SetForgetCode(string.Empty.GenerateRandomString(5),5);
+            if (result.IsFailure)
+            {
+                return result.ToActionResult();
+            }
+            var _identityResult = await _userManager.UpdateAsync(user);
+            if (!_identityResult.Succeeded)
+            {
+                return Result.InternalError<bool>(Error.Internal(_identityResult.Errors.First().Description)).ToActionResult();
+            
+            }
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            // await transaction.CommitAsync(cancellationToken);
+            return Result.Success(true).ToActionResult();
+        // }
+        // catch (Exception e)
+        // {
+        //     await transaction.RollbackAsync(cancellationToken);
+        //     Console.WriteLine(e);
+        //     throw;
+        // }
+        
     }
 }

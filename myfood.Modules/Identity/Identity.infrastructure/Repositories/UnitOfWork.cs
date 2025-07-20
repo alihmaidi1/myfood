@@ -16,12 +16,12 @@ public class UnitOfWork: IUnitOfWork
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         => await _context.SaveChangesAsync(cancellationToken);
 
-    public async Task BeginTransactionAsync()
-        => _transaction = await _context.Database.BeginTransactionAsync();
+    public async  Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        =>  await _context.Database.BeginTransactionAsync(cancellationToken);
 
-    public async Task CommitTransactionAsync()
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
     {
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
         if (_transaction != null)
         {
             await _transaction.CommitAsync();
