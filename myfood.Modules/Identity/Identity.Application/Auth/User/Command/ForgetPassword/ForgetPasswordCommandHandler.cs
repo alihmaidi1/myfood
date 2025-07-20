@@ -1,4 +1,3 @@
-using Identity.Domain.Event;
 using Identity.Domain.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

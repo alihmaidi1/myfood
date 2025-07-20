@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.SignalR;
+using Shared.Domain.Event;
+using Shared.Infrastructure.Database;
 
 namespace Notification;
 
@@ -20,6 +22,8 @@ public static class NotificationModule
             
         });
         services.AddSingleton<IUserIdProvider, UserIdProvider>();
+        
+        services.AddDbContext<myFoodNotificationDbContext>(Postgres.StandardOptions(configuration, Schemas.Notification));
         
         return services;
 

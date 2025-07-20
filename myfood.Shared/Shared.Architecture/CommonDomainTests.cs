@@ -3,6 +3,7 @@ using FluentAssertions;
 using NetArchTest.Rules;
 using Shared.Domain.CQRS;
 using Shared.Domain.Entities;
+using Shared.Domain.Event;
 
 namespace Shared.Architecture;
 
@@ -14,7 +15,7 @@ public abstract class CommonDomainTests
     {
         Types.InAssembly(domainAssembly)
             .That()
-            .ImplementInterface(typeof(IDomainEvent))
+            .ImplementInterface(typeof(IEvent))
             .Should()
             .BeSealed()
             .GetResult()
@@ -26,7 +27,7 @@ public abstract class CommonDomainTests
     {
         Types.InAssembly(domainAssembly)
             .That()
-            .ImplementInterface(typeof(IDomainEvent))
+            .ImplementInterface(typeof(IEvent))
             .Should()
             .HaveNameEndingWith("DomainEvent")
             .GetResult()

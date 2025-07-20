@@ -2,6 +2,7 @@ using Identity.Domain.Event;
 using Microsoft.AspNetCore.Identity;
 using Shared.Domain.CQRS;
 using Shared.Domain.Entities;
+using Shared.Domain.Event;
 using Shared.Domain.OperationResult;
 namespace Identity.Domain.Security;
 
@@ -51,7 +52,7 @@ public class User: IdentityUser<Guid>, IAggregate
         }
         ForgetCode=code;
         ForgetDate=DateTime.UtcNow.AddMinutes(forgetMinute);
-        RaiseDomainEvent(new SendEmailDomainEvent(Email!,$"your reset code is {code} and it will after ${forgetMinute} minutes Expired."));
+        RaiseDomainEvent(new SendEmailEvent(Email!,$"your reset code is {code} and it will after ${forgetMinute} minutes Expired."));
         return Result.Success<object>();
         
     }
@@ -67,9 +68,9 @@ public class User: IdentityUser<Guid>, IAggregate
         return dequeuedEvents;
     }
 
-    public void RaiseDomainEvent(IDomainEvent domainEvent)
+    public void RaiseDomainEvent(IDomainEvent @event)
     {
-        _domainEvents.Add(domainEvent);
+        _domainEvents.Add(@event);
         
         
     }

@@ -1,19 +1,16 @@
 using System.Reflection;
-using Identity.Domain.Security;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Database;
-using Shared.Infrastructure.Messages;
 using Shared.Infrastructure.Messages.Inbox;
 using Shared.Infrastructure.Messages.Outbox;
 
-namespace Identity.infrastructure;
+namespace Notification;
 
-public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
+public class myFoodNotificationDbContext: DbContext
 {
     
     
-    public myFoodIdentityDbContext(DbContextOptions<myFoodIdentityDbContext> option) : base(option)
+    public myFoodNotificationDbContext(DbContextOptions<myFoodNotificationDbContext> option) : base(option)
     {
 
 
@@ -21,7 +18,7 @@ public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.HasDefaultSchema(Schemas.Identity);
+        builder.HasDefaultSchema(Schemas.Notification);
         
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         builder.ApplyConfiguration(new OutboxMessageConfiguration());
@@ -32,7 +29,9 @@ public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
 
     }
     
-    
-    public DbSet<RefreshToken> RefreshTokens { get; init; }
+    // public DbSet<ArchiveRecord>  ArchiveRecords { get; init; }
+    // public DbSet<OutboxMessage> OutboxMessages { get; init; }
+    //
+    // public DbSet<RefreshToken> RefreshTokens { get; init; }
 
 }

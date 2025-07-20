@@ -1,3 +1,4 @@
+using Api.Extensions;
 using Shared.Infrastructure.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,13 +20,13 @@ builder.Services.AddOpenApi(options =>
 
 
 
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApplication(allAssembly);
+builder.Services.AddInfrastructure(builder.Configuration,ModuleExtension.GetModuleAssemblyTypes().Keys.ToList());
+builder.Services.AddApplication(ModuleExtension.GetModuleAssemblyTypes());
 builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
 
 builder.Services
-    .AddIdentityApplicationModules(builder.Configuration)
+    .AddIdentityApplicationModules(builder.Configuration,typeof(myFoodIdentityDbContext))
     .AddIdentityInfrastructureModule(builder.Configuration)
     .AddCommonApplication();
 

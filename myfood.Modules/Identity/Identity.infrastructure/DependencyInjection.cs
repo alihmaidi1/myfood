@@ -1,16 +1,16 @@
+using System.Reflection;
 using Identity.Domain.Repository;
 using Identity.Domain.Security;
-using Identity.infrastructure.Messages;
 using Identity.infrastructure.Repositories;
 using Identity.infrastructure.Repositories.Jwt;
 using Identity.infrastructure.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Domain.CQRS;
-using Shared.Infrastructure.BackgroundJobs;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shared.Domain.Entities.Message;
+using Shared.Domain.Event;
 using Shared.Infrastructure.Database;
 using Shared.Infrastructure.Messages;
 
@@ -40,10 +40,22 @@ public static class DependencyInjection
 
         services.AddDbContext<myFoodIdentityDbContext>(Postgres.StandardOptions(configuration, Schemas.Identity));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddHostedService<OutboxProcessor<myFoodIdentityDbContext>>();
-        services.TryDecorate(typeof(IDomainEventHandler<>),typeof(IdempotentIdentityDomainEventHandler<>));
+        // AddDomainEventHandlers(services);
+        // services.AddDomainEventHandlers(Assembly.GetExecutingAssembly());
+        // var IeventHandlerType = Assembly.GetExecutingAssembly()
+        //     .GetTypes()
+        //     .Where(t => t.GetInterfaces()
+        //         .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEventHandler<>)))
+        //     .ToList();
+        //
+        //
+            // typeof(IEventHandler<>).Assembly;
+        // services.TryDecorate(typeof(IEventHandler<>),typeof(IdempotentIdentityOutboxEventHandler<>));
+        // services.TryDecorate(typeof(IEventHandler<>),typeof(IdempotentIdentityInboxEventHandler<>),Assembly.GetExecutingAssembly());
+
         return services;
     }
+
     
     
     public static WebApplication UseIdentityInfrastructureModule(this WebApplication app)

@@ -1,15 +1,19 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Refit;
 using Shared.Domain.CQRS;
+using Shared.Domain.Entities.Message;
+using Shared.Domain.Event;
 using Shared.Domain.Services;
 using Shared.Domain.Services.Email;
 using Shared.Domain.Services.Twilio;
 using Shared.Infrastructure.Extensions;
-using Shared.Infrastructure.Interceptors;
 using Shared.Infrastructure.Messages;
+using Shared.Infrastructure.Messages.Outbox;
 using Shared.Infrastructure.Security;
 using Shared.Infrastructure.Security.Jwt;
 using Shared.Infrastructure.Services;
@@ -25,7 +29,7 @@ public static class InfrastructureConfiguration
 
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,List<Type>  dbContexts)
     {
 
         services.AddLimitRate();
@@ -65,9 +69,18 @@ public static class InfrastructureConfiguration
             .ValidateOnStart();
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
 
-
-
         
+        foreach (var dbContextType in dbContexts)
+        {
+            var outboxServiceType = typeof(MessageProcessor<,,>).MakeGenericType(dbContextType, typeof(OutboxMessage),typeof(IDomainEvent));
+            var inboxServiceType = typeof(MessageProcessor<,,>).MakeGenericType(dbContextType, typeof(InboxMessage),typeof(IIntegrationEvent));
+            services.AddSingleton(typeof(IHostedService),outboxServiceType);
+            services.AddSingleton(typeof(IHostedService),inboxServiceType);
+
+        }
+
+
+                
         return services;
     }
     

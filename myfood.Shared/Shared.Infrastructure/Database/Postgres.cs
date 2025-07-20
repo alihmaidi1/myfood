@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Messages;
+using Shared.Infrastructure.Messages.Outbox;
 
 namespace Shared.Infrastructure.Database;
 
