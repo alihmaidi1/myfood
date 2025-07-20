@@ -4,10 +4,13 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Application.CQRS;
+using Shared.Application.Extensions;
+using Shared.Application.Message;
 using Shared.Application.Services.User;
 using Shared.Application.Versioning;
 using Shared.Domain.CQRS;
-using Shared.Extensions;
+using Shared.Domain.Entities.Message;
+using Shared.Domain.Event;
 
 namespace Shared.Application;
 
@@ -16,37 +19,43 @@ public static class ApplicationConfiguration
 
     public static IServiceCollection AddApplication(
         this IServiceCollection services,
-        Assembly[] moduleAssemblies)
+        Dictionary<Type, Assembly> assemblies)
     {
 
         #region Core
         services.AddVersioning();
         services.AddMemoryCache();
-        services.AddCarterWithAssemblies(moduleAssemblies);
+        services.AddCarterWithAssemblies(assemblies.Values.ToArray());
 
         #endregion        
         
         #region CQRS_Abstraction
         services.Scan(scan =>
-            scan.FromAssemblies(moduleAssemblies)
+            scan.FromAssemblies(assemblies.Values.ToArray())
                 .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo(typeof(IPipelineBehavior<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
+                
                 .WithScopedLifetime()
-                .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                
+                
+                
                 
         );
         services.AddScoped<IDispatcher, Dispatcher>();
-        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddSingleton<IEventDispatcher, EventDispatcher>();
+        services.AddValidatorsFromAssemblies(assemblies.Values.ToArray(),includeInternalTypes:true);
+        foreach (var assembly in assemblies)
+        {
 
-        // services.TryDecorate(typeof());
-        
-        services.AddValidatorsFromAssemblies(moduleAssemblies,includeInternalTypes:true);
-        
+            services.AddEventHandlersWithDecorate<OutboxMessageConsumer,IDomainEvent>(assembly.Value,assembly.Key);
+            services.AddEventHandlersWithDecorate<OutboxMessageConsumer,IIntegrationEvent>(assembly.Value,assembly.Key);
+
+            // services.AddEventHandlers<InboxMessageConsumer>(assembly.Value,assembly.Key);
+            
+        }
         
         #endregion
 

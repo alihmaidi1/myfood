@@ -1,4 +1,5 @@
 using Shared.Domain.CQRS;
+using Shared.Domain.Event;
 
 namespace Shared.Domain.Entities;
 
@@ -16,9 +17,9 @@ public class Aggregate: Entity,IAggregate
         return dequeuedEvents;
     }
 
-    public void RaiseDomainEvent(IDomainEvent domainEvent)
+    public void RaiseDomainEvent(IDomainEvent @event)
     {
-        _domainEvents.Add(domainEvent);
+        _domainEvents.Add(@event);
         
         
     }

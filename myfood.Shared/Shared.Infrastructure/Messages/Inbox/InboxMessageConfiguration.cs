@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Domain.Entities;
+using Shared.Domain.Entities.Message;
 
-namespace Shared.Infrastructure.Configurations;
+namespace Shared.Infrastructure.Messages.Inbox;
 
-public class OutboxMessageConfiguration:IEntityTypeConfiguration<OutboxMessage>
+public class InboxMessageConfiguration: IEntityTypeConfiguration<InboxMessage>
 {
-    public void Configure(EntityTypeBuilder<OutboxMessage> builder)
+    public void Configure(EntityTypeBuilder<InboxMessage> builder)
     {
         
-        builder.ToTable("outbox_messages");
+        builder.ToTable("inbox_messages");
         
         builder.HasKey(outboxMessage => outboxMessage.Id);
 

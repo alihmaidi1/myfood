@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Identity.infrastructure.Migrations
 {
     [DbContext(typeof(myFoodIdentityDbContext))]
-    [Migration("20250717074633_outboxmessage")]
-    partial class outboxmessage
+    [Migration("20250720085303_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -273,7 +273,50 @@ namespace Identity.infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("Shared.Domain.Entities.OutboxMessage", b =>
+            modelBuilder.Entity("Shared.Domain.Entities.Message.InboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("jsonb");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("inbox_messages", "Identity");
+                });
+
+            modelBuilder.Entity("Shared.Domain.Entities.Message.InboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("MessageId", "Name");
+
+                    b.ToTable("InboxMessageConsumers", "Identity");
+                });
+
+            modelBuilder.Entity("Shared.Domain.Entities.Message.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,6 +343,20 @@ namespace Identity.infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("outbox_messages", "Identity");
+                });
+
+            modelBuilder.Entity("Shared.Domain.Entities.Message.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("MessageId", "Name");
+
+                    b.ToTable("OutboxMessageConsumers", "Identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -2,6 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using NetArchTest.Rules;
 using Shared.Domain.CQRS;
+using Shared.Domain.Event;
 
 namespace Shared.Architecture;
 
@@ -169,7 +170,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IDomainEventHandler<>))
+            .ImplementInterface(typeof(IEventHandler<>))
             .Should()
             .NotBePublic()
             .GetResult()
@@ -181,7 +182,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IDomainEventHandler<>))
+            .ImplementInterface(typeof(IEventHandler<>))
             .Should()
             .BeSealed()
             .GetResult()
@@ -193,7 +194,7 @@ public abstract class CommonApplicationTests
     {
         Types.InAssembly(applicationAssembly)
             .That()
-            .ImplementInterface(typeof(IDomainEventHandler<>))
+            .ImplementInterface(typeof(IEventHandler<>))
             .Should()
             .HaveNameEndingWith("DomainEventHandler")
             .GetResult()

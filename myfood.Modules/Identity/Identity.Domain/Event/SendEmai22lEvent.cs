@@ -2,12 +2,13 @@ using Shared.Domain.Event;
 
 namespace Identity.Domain.Event;
 
-public sealed class SendEmailDomainEvent: Shared.Domain.Event.Event,IDomainEvent
+public class SendEmai22lEvent: Shared.Domain.Event.Event,IIntegrationEvent
 {
+    
     public string Email;
     public string Message;
 
-    public SendEmailDomainEvent(string email, string message)
+    public SendEmai22lEvent(string email, string message)
     {
         Email = email;
         
@@ -15,5 +16,5 @@ public sealed class SendEmailDomainEvent: Shared.Domain.Event.Event,IDomainEvent
         Message = message;
         
     }
-
+    
 }

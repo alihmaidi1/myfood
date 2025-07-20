@@ -1,6 +1,6 @@
-namespace Shared.Domain.Entities;
+namespace Shared.Domain.Entities.Message;
 
-public sealed class OutboxMessage
+public sealed class OutboxMessage: IMessage
 {
     public Guid Id { get; set; }
     public string Type { get; set; }

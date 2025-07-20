@@ -3,6 +3,7 @@ using FluentAssertions;
 using NetArchTest.Rules;
 using Shared.Domain.CQRS;
 using Shared.Domain.Entities;
+using Shared.Domain.Event;
 
 namespace Shared.Architecture;
 

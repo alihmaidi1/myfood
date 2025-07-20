@@ -2,9 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 using Shared.Domain.Entities;
+using Shared.Domain.Entities.Message;
 using Shared.Infrastructure.Serialization;
 
-namespace Shared.Infrastructure.Interceptors;
+namespace Shared.Infrastructure.Messages.Outbox;
 
 public class InsertOutboxMessagesInterceptor: SaveChangesInterceptor
 {

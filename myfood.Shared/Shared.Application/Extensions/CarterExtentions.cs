@@ -2,7 +2,7 @@ using System.Reflection;
 using Carter;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shared.Extensions;
+namespace Shared.Application.Extensions;
 
 public static class CarterExtentions
 {
