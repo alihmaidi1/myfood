@@ -15,7 +15,7 @@ public abstract class CommonDomainTests
     {
         Types.InAssembly(domainAssembly)
             .That()
-            .ImplementInterface(typeof(IEvent))
+            .ImplementInterface(typeof(IDomainEvent))
             .Should()
             .BeSealed()
             .GetResult()
@@ -27,7 +27,7 @@ public abstract class CommonDomainTests
     {
         Types.InAssembly(domainAssembly)
             .That()
-            .ImplementInterface(typeof(IEvent))
+            .ImplementInterface(typeof(IDomainEvent))
             .Should()
             .HaveNameEndingWith("DomainEvent")
             .GetResult()

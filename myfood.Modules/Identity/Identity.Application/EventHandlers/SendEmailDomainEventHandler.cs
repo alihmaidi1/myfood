@@ -4,9 +4,9 @@ using Shared.Domain.Event;
 
 namespace Identity.Application.EventHandlers;
 
-internal sealed class SendEmailEventHandler: IEventHandler<SendEmailEvent>
+internal sealed class SendEmailDomainEventHandler: IEventHandler<SendEmailDomainEvent>
 {
-    public async Task Handle(SendEmailEvent domainEvent, CancellationToken cancellationToken)
+    public async Task Handle(SendEmailDomainEvent domainDomainEvent, CancellationToken cancellationToken)
     {
         Console.WriteLine("TestEmailEventHandler2");
 

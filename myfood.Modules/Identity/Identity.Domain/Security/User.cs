@@ -52,7 +52,7 @@ public class User: IdentityUser<Guid>, IAggregate
         }
         ForgetCode=code;
         ForgetDate=DateTime.UtcNow.AddMinutes(forgetMinute);
-        RaiseDomainEvent(new SendEmailEvent(Email!,$"your reset code is {code} and it will after ${forgetMinute} minutes Expired."));
+        RaiseDomainEvent(new SendEmailDomainEvent(Email!,$"your reset code is {code} and it will after ${forgetMinute} minutes Expired."));
         return Result.Success<object>();
         
     }
