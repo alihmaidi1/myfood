@@ -26,6 +26,7 @@ public class Dispatcher : IDispatcher
             t => typeof(ICommandHandler<,>).MakeGenericType(t, typeof(TResult)));
 
         return await InvokePipeline<TResult>(command, handlerType, cancellationToken);
+        
     }
 
     public async Task<TResult> Send<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default)

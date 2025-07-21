@@ -21,7 +21,7 @@ builder.Services.AddOpenApi(options =>
 
 
 builder.Services.AddInfrastructure(builder.Configuration,ModuleExtension.GetModuleAssemblyTypes().Keys.ToList());
-builder.Services.AddApplication(ModuleExtension.GetModuleAssemblyTypes());
+builder.Services.AddApplication(ModuleExtension.GetModuleAssemblyTypes(),AppDomain.CurrentDomain.GetAssemblies().ToList());
 builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
 

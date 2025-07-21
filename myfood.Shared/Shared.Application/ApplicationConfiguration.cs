@@ -19,7 +19,7 @@ public static class ApplicationConfiguration
 
     public static IServiceCollection AddApplication(
         this IServiceCollection services,
-        Dictionary<Type, Assembly> assemblies)
+        Dictionary<Type, Assembly> assemblies,List<Assembly> allAssemblies)
     {
 
         #region Core
@@ -31,7 +31,7 @@ public static class ApplicationConfiguration
         
         #region CQRS_Abstraction
         services.Scan(scan =>
-            scan.FromAssemblies(assemblies.Values.ToArray())
+            scan.FromAssemblies(allAssemblies)
                 .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
