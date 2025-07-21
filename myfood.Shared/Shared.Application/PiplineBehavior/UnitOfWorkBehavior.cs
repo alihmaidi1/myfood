@@ -1,34 +1,32 @@
 using System.Transactions;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Shared.Application.CQRS;
 using Shared.Domain.CQRS;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Shared.Domain.OperationResult;
 
 namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(2)]
-public class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse> where TResponse : IResult
+
+public class UnitOfWorkBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
+    where TRequest : IRequest<TResponse> where TResponse : Result
 {
+    
+    
+    
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, Func<Task<TResponse>> next)
     {
-        // TransactionScopeOptions: Required, AsyncFlow, ReadCommitted
-        var transactionOptions = new TransactionOptions
-        {
-            IsolationLevel = IsolationLevel.ReadCommitted,
-            Timeout = TransactionManager.DefaultTimeout
-        };
-
-        using (var scope = new TransactionScope(
+        using var transactionScope = new TransactionScope(
             TransactionScopeOption.Required,
-            transactionOptions,
-            TransactionScopeAsyncFlowOption.Enabled))
-        {
-            var result = await next();
-            scope.Complete();
+            new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
+            TransactionScopeAsyncFlowOption.Enabled);
+            var result =await next();
+            if (result.IsSuccess)
+            {
+                transactionScope.Complete();
+            }
             return result;
-        }
+     
     }
 }

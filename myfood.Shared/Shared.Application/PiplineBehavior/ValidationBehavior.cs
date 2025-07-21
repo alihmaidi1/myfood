@@ -10,7 +10,7 @@ namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(4)]
 public class ValidationBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
-    where TRequest : IRequest<TResponse> where TResponse: IResult
+    where TRequest : IRequest<TResponse> where TResponse: Result
 
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;

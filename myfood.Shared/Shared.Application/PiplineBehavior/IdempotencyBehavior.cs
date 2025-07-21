@@ -9,7 +9,7 @@ namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(3)]
 public class IdempotencyBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
-    where TRequest : IRequest<TResponse> where TResponse: IResult
+    where TRequest : IRequest<TResponse> where TResponse : Result
 {
     
     private readonly ILogger<IdempotencyBehavior<TRequest,TResponse>> logger;
