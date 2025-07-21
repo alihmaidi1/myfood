@@ -1,5 +1,6 @@
 ./myfood.Api/Api/appsettings.Development.json
 myfood.Api/Api/appsettings.Development.json
+**/*appsettings*.json
 [Bb]in/
 [Oo]bj/
 .vs/
