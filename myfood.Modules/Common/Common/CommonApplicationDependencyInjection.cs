@@ -8,7 +8,7 @@ namespace Common;
 public static class CommonApplicationDependencyInjection
 {
 
-    public static IServiceCollection AddCommonApplication(this IServiceCollection services)
+    public static IServiceCollection AddCommonModule(this IServiceCollection services)
     {
         
         services.AddScoped<IAwsStorageService,AwsStorageService>();

@@ -9,7 +9,6 @@
 
 
     <ItemGroup>
-      <Folder Include="Auth\Admin\Command\Login\" />
       <Folder Include="Auth\Admin\Query\" />
       <Folder Include="Auth\Cooker\" />
       <Folder Include="Auth\User\Command\Logout\" />

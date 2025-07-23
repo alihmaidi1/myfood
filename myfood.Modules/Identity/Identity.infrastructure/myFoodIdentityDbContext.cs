@@ -1,23 +1,22 @@
 using System.Reflection;
 using Identity.Domain.Security;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Identity.Domain.Security.Admin;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Database;
-using Shared.Infrastructure.Messages;
 using Shared.Infrastructure.Messages.Inbox;
 using Shared.Infrastructure.Messages.Outbox;
 
 namespace Identity.infrastructure;
 
-public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
+public class myFoodIdentityDbContext: DbContext
 {
-    
     
     public myFoodIdentityDbContext(DbContextOptions<myFoodIdentityDbContext> option) : base(option)
     {
 
 
     }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -34,5 +33,8 @@ public class myFoodIdentityDbContext: IdentityDbContext<User,Role,Guid>
     
     
     public DbSet<RefreshToken> RefreshTokens { get; init; }
+    
+    public DbSet<Role> Roles { get; init; }
+    public DbSet<Admin>  Admins { get; init; }
 
 }

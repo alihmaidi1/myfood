@@ -1,8 +1,8 @@
-namespace Shared.Domain.CQRS;
+    namespace Shared.Domain.CQRS;
 
-public interface ICommand<TResult>: IRequest<TResult>
-{
-    
-    
-    
-}
+    public interface ICommand<TResult>: IRequest<TResult>
+    {
+        
+        
+        
+    }

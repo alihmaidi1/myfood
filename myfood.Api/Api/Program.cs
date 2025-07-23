@@ -1,6 +1,3 @@
-using Api.Extensions;
-using Shared.Infrastructure.Messages;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) =>
@@ -8,10 +5,15 @@ builder.Host.UseSerilog((context, config) =>
 
 var allAssembly = AppDomain.CurrentDomain.GetAssemblies();
 
-
-
 // Add services to the container. 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+
+
+#region Shared
+
+builder.Services.AddInfrastructure(builder.Configuration,ModuleExtension.GetModuleAssemblyTypes().Keys.ToList());
+builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
@@ -20,18 +22,25 @@ builder.Services.AddOpenApi(options =>
 
 
 
-builder.Services.AddInfrastructure(builder.Configuration,ModuleExtension.GetModuleAssemblyTypes().Keys.ToList());
+
 builder.Services.AddApplication(ModuleExtension.GetModuleAssemblyTypes(),AppDomain.CurrentDomain.GetAssemblies().ToList());
-builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, allAssembly);
 
+#endregion
+
+
+
+#region Modulars
+
 builder.Services
-    .AddIdentityApplicationModules(builder.Configuration,typeof(myFoodIdentityDbContext))
+    .AddIdentityApplicationModules(builder.Configuration)
     .AddIdentityInfrastructureModule(builder.Configuration)
-    .AddCommonApplication();
+    .AddCommonModule()
+    .AddNotificationModule(builder.Configuration);
 
 
-builder.Services.AddNotificationModule(builder.Configuration);
+#endregion
+
 
 var app = builder.Build();
 

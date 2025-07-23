@@ -1,4 +1,4 @@
-namespace Identity.Domain.Security;
+namespace Identity.Domain.Security.Admin;
 
 public enum Permission
 {

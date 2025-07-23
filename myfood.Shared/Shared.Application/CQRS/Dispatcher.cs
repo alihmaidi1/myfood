@@ -25,7 +25,7 @@ public class Dispatcher : IDispatcher
         var handlerType = _commandHandlerTypes.GetOrAdd(commandType, 
             t => typeof(ICommandHandler<,>).MakeGenericType(t, typeof(TResult)));
 
-        return await InvokePipeline<TResult>(command, handlerType, cancellationToken);
+        return await InvokePipeline(command, handlerType, cancellationToken);
         
     }
 
@@ -38,7 +38,7 @@ public class Dispatcher : IDispatcher
         var handlerType = _queryHandlerTypes.GetOrAdd(queryType, 
             t => typeof(IQueryHandler<,>).MakeGenericType(t, typeof(TResult)));
 
-        return await InvokePipeline<TResult>(query, handlerType, cancellationToken);
+        return await InvokePipeline(query, handlerType, cancellationToken);
     }
 
     private async Task<TResult> InvokePipeline<TResult>(IRequest<TResult> request, Type handlerType, CancellationToken cancellationToken)
@@ -79,7 +79,7 @@ public class Dispatcher : IDispatcher
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Error invoking handler for {request.GetType().Name}", ex);
+            throw new InvalidOperationException(ex.Message);
         }
     }
 }

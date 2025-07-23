@@ -37,24 +37,19 @@ public static class ApplicationConfiguration
                 .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo(typeof(IPipelineBehavior<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
-                
                 .WithScopedLifetime()
                 
-                
-                
-                
         );
+        
         services.AddScoped<IDispatcher, Dispatcher>();
         services.AddSingleton<IEventDispatcher, EventDispatcher>();
-        services.AddValidatorsFromAssemblies(assemblies.Values.ToArray(),includeInternalTypes:true);
+        services.AddValidatorsFromAssemblies(allAssemblies,includeInternalTypes:true);
         foreach (var assembly in assemblies)
         {
 
             services.AddEventHandlersWithDecorate<OutboxMessageConsumer,IDomainEvent>(assembly.Value,assembly.Key);
-            services.AddEventHandlersWithDecorate<OutboxMessageConsumer,IIntegrationEvent>(assembly.Value,assembly.Key);
+            services.AddEventHandlersWithDecorate<InboxMessageConsumer,IIntegrationEvent>(assembly.Value,assembly.Key);
 
-            // services.AddEventHandlers<InboxMessageConsumer>(assembly.Value,assembly.Key);
-            
         }
         
         #endregion

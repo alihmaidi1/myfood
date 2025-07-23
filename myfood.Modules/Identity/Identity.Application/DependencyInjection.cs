@@ -13,10 +13,9 @@ namespace Identity.Application;
 public static class DependencyInjection
 {
 
-    public static IServiceCollection AddIdentityApplicationModules(this IServiceCollection services, IConfiguration configuration,Type DbContextType)
+    public static IServiceCollection AddIdentityApplicationModules(this IServiceCollection services, IConfiguration configuration)
     {
 
-        // services.AddDomainEventHandlers(AssemblyReference.Assembly,DbContextType);
         return services;
     }
 
@@ -25,7 +24,6 @@ public static class DependencyInjection
     public static WebApplication UseIdentityApplicationModule(this WebApplication app)
     {
 
-        // app.UseIdentityInfrastructureModule();
         return app;
     }
 

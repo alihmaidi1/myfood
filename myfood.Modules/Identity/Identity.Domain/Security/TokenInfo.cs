@@ -8,6 +8,8 @@ public class TokenInfo
     public string RefreshToken { get; private set; }
     
     public DateTime ExpiresIn { get; private set; }
+    
+    
 
 
     public TokenInfo(string token, string refreshToken, DateTime expiresIn)
