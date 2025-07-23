@@ -3,13 +3,14 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Shared.Application.CQRS;
 using Shared.Domain.CQRS;
+using Shared.Domain.Exception;
 using Shared.Domain.OperationResult;
 
 namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(3)]
 public class IdempotencyBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
-    where TRequest : IRequest<TResponse> where TResponse : Result
+    where TRequest : IRequest<TResponse> 
 {
     
     private readonly ILogger<IdempotencyBehavior<TRequest,TResponse>> logger;
@@ -23,21 +24,21 @@ public class IdempotencyBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest
     }
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, Func<Task<TResponse>> next)
     {
-        if (request.RequestId==null)
+        if (request.RequestId==null||!request.RequestId.HasValue)
          {
              logger.LogWarning("Idempotency check failed: RequestId is null for {CommandType}", typeof(TRequest).Name);
-             return (TResponse)Result.ValidationFailure<object>(Error.ValidationFailures("Idempotency check failed: RequestId is null")).ToActionResult();
+             throw new IdempotencyException("Idempotency check failed: RequestId is null");
          }
          string cacheKey = $"Idempotent_{typeof(TRequest).Name}_{request.RequestId}";
          if (_cache.TryGetValue(cacheKey, out var cachedResult))
          {
              logger.LogInformation("Returning cached idempotent result for {CacheKey}", cacheKey);
-             return (TResponse)Result.Conflict<object>(Error.AlreadyProcessed).ToActionResult();
+             throw new IdempotencyException("Returning cached idempotent result for {CacheKey}");
               
          }
              
          var result = await next();
-         _cache.Set(cacheKey, cacheKey,TimeSpan.FromSeconds(60));
+         _cache.Set(cacheKey, cacheKey,TimeSpan.FromSeconds(1));
          return result;
 
     }

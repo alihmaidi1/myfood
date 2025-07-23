@@ -31,16 +31,16 @@ public class Error: IEquatable<Error>
     public Error(string code, string message)
     {
         
-        Message=message;
-        Code=code;
+        message=message;
+        code=code;
         
     }
     
-    public string Message { get; set; }
+    public string message { get; set; }
     
-    public string Code { get; set; }
+    public string code { get; set; }
     
-    public static implicit operator string(Error error)=>error.Code;
+    public static implicit operator string(Error error)=>error.code;
     public bool Equals(Error? other)
     {
         if (other is null)
@@ -48,7 +48,7 @@ public class Error: IEquatable<Error>
             return false;
         }
         
-        return this.Code == other.Code && this.Message == other.Message;
+        return this.code == other.code && this.message == other.message;
     }
 
     

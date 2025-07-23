@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Shared.Domain.CQRS;
+using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
 
@@ -10,7 +11,7 @@ public class LoginUserRequest
     
 }
 
-public sealed class LoginUserCommand:LoginUserRequest, ICommand<IResult>
+public sealed class LoginUserCommand:LoginUserRequest, ICommand<TResult<LoginUserResponse>>
 {
     public Guid? RequestId { get; set; }
 }

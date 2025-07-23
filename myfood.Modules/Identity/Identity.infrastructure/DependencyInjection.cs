@@ -1,6 +1,7 @@
 using System.Reflection;
 using Identity.Domain.Repository;
 using Identity.Domain.Security;
+using Identity.Domain.Security.Admin;
 using Identity.infrastructure.Repositories;
 using Identity.infrastructure.Repositories.Jwt;
 using Identity.infrastructure.Seed;
@@ -24,34 +25,11 @@ public static class DependencyInjection
 
 
         services.AddScoped<IJwtRepository, JwtRepository>();
-        services.AddScoped<IAccountRepository, AccountRepository>();
-        services.AddIdentityCore<User>(option =>
-            {
-                option.SignIn.RequireConfirmedAccount = true;
-                
-            
-            
-            })
-            .AddRoles<Role>()
-            .AddEntityFrameworkStores<myFoodIdentityDbContext>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders()
-            .AddApiEndpoints();
-
+        // services.AddScoped<IAccountRepository, AccountRepository>();
+        
+        services.AddScoped<IAdminRepository, AdminRepository>();
         services.AddDbContext<myFoodIdentityDbContext>(Postgres.StandardOptions(configuration, Schemas.Identity));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        // AddDomainEventHandlers(services);
-        // services.AddDomainEventHandlers(Assembly.GetExecutingAssembly());
-        // var IeventHandlerType = Assembly.GetExecutingAssembly()
-        //     .GetTypes()
-        //     .Where(t => t.GetInterfaces()
-        //         .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEventHandler<>)))
-        //     .ToList();
-        //
-        //
-            // typeof(IEventHandler<>).Assembly;
-        // services.TryDecorate(typeof(IEventHandler<>),typeof(IdempotentIdentityOutboxEventHandler<>));
-        // services.TryDecorate(typeof(IEventHandler<>),typeof(IdempotentIdentityInboxEventHandler<>),Assembly.GetExecutingAssembly());
 
         return services;
     }

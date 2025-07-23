@@ -1,8 +1,10 @@
 using System.Reflection;
+using FluentAssertions;
 using FluentValidation;
 using NetArchTest.Rules;
 using Shared.Domain.CQRS;
 using Shared.Domain.Event;
+using Shared.Domain.OperationResult;
 
 namespace Shared.Architecture;
 
@@ -20,6 +22,9 @@ public abstract class CommonApplicationTests
             .ShouldBeSuccessful();
         
     }
+    
+    
+    
     
     
     protected static void AssertCommandsShouldHaveNameEndingWithCommand(Assembly applicationAssembly)

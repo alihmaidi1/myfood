@@ -10,4 +10,9 @@
       <ProjectReference Include="..\..\..\myfood.Shared\Shared.Domain\Shared.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Security\Chef\" />
+      <Folder Include="Security\User\" />
+    </ItemGroup>
+
 </Project>

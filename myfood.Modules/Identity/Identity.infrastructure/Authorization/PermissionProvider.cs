@@ -1,9 +1,10 @@
-using Identity.Domain.Security;
+using Identity.Domain.Security.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Shared.Infrastructure.Authorization;
 
-namespace Shared.Infrastructure.Authorization;
+namespace Identity.infrastructure.Authorization;
 
 public class PermissionProvider:IAuthorizationPolicyProvider
 {

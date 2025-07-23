@@ -1,15 +1,13 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Shared.Application.CQRS;
 using Shared.Domain.CQRS;
-using Shared.Domain.OperationResult;
 
 namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(1)]
 public class LoggingBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
-    where TRequest : IRequest<TResponse> where TResponse : Result
+    where TRequest : IRequest<TResponse> 
 {
 
     private readonly ILogger<LoggingBehavior<TRequest,TResponse>> logger; 

@@ -7,3 +7,5 @@ global using Serilog;
 global using Shared.Application;
 global using Shared.Infrastructure;
 global using Common;
+global using Api.Extensions;
+global using Shared.Infrastructure.Messages;

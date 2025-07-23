@@ -1,17 +1,29 @@
 using Identity.Domain.Repository;
+using Identity.Domain.Security;
+using Identity.Domain.Security.Admin;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Identity.infrastructure.Repositories;
 
 public class UnitOfWork: IUnitOfWork
 {
-    private readonly myFoodIdentityDbContext _context;
     private IDbContextTransaction? _transaction;
+    public IAdminRepository _adminRepository { get; }
+    public IJwtRepository _jwtRepository { get; }
 
-    public UnitOfWork(myFoodIdentityDbContext context)
+
+    public myFoodIdentityDbContext _context { get; }
+    public UnitOfWork(myFoodIdentityDbContext context,
+        IJwtRepository jwtRepository,
+        IAdminRepository adminRepository)
     {
         _context = context;
+        _jwtRepository = jwtRepository;
+        _adminRepository = adminRepository;
     }
+
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         => await _context.SaveChangesAsync(cancellationToken);

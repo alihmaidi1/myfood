@@ -15,7 +15,15 @@ public class ApplicationTests: CommonApplicationTests
         AssertCommandsShouldBeSealed(ApplicationAssembly);
     }
 
-    
+        
+    // [Fact]
+    // public void CommandsResult_Should_BeOfTypeResultOperation()
+    // {
+    //     AssertCommandsResultShouldBeOfTypeResultOperation(ApplicationAssembly);
+    //     // AssertCommandsShouldBeSealed(ApplicationAssembly);
+    // }
+    //
+    //
     [Fact]
     public void Commands_ShouldHave_NameEndingWith_Command()
     {

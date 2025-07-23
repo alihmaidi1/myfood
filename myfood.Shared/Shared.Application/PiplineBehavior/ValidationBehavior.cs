@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Mapster;
 using Microsoft.AspNetCore.Http;
+using Refit;
 using Shared.Application.CQRS;
 using Shared.Domain.CQRS;
 using Shared.Domain.OperationResult;
@@ -10,8 +11,7 @@ namespace Shared.Application.PiplineBehavior;
 
 [PiplineOrder(4)]
 public class ValidationBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,TResponse>
-    where TRequest : IRequest<TResponse> where TResponse: Result
-
+    where TRequest : IRequest<TResponse>  
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -26,8 +26,9 @@ public class ValidationBehavior<TRequest,TResponse>: IPipelineBehavior<TRequest,
          {
              return await next();
          }
-         var result = Result.ValidationFailure<object>(Error.ValidationFailures(validationFailures)).ToActionResult();
-         return (TResponse)result;
+
+         throw new ValidationException(validationFailures);
+
     }
     
     
