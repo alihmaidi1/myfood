@@ -9,3 +9,10 @@ public interface IRequestHandler<TCommand, TResult> where TCommand : IRequest<TR
  
     
 }
+
+public interface IRequestHandler<TCommand> where TCommand : IRequest
+{
+    public Task Handle(TCommand request, CancellationToken cancellationToken);
+    
+    
+}

@@ -35,7 +35,7 @@ internal sealed class LoginAdminCommandHandler: ICommandHandler<LoginAdminComman
         }
 
         var permissions = user.Roles.SelectMany(x=>x.Permissions).ToList();
-        var tokenInfo = await _unitOfWork._jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Customer,cancellationToken,permissions);
+        var tokenInfo = await _unitOfWork._jwtRepository.GetTokensInfo(user.Id,user.Email!,UserType.Admin,cancellationToken,permissions);
         var result = tokenInfo.Adapt<LoginAdminResponse>();
         result.Permissions = permissions;
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -5,3 +5,10 @@ public interface IRequest<TResult>
  
     public Guid? RequestId { get; set; }   
 }
+
+public interface IRequest
+{
+    public Guid? RequestId { get; set; }   
+    
+    
+}
