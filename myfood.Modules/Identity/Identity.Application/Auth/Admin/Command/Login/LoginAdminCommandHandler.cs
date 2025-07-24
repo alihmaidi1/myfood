@@ -2,7 +2,7 @@ using Identity.Domain.Repository;
 using Identity.Domain.Security;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Shared.Domain.CQRS;
+using Shared.Domain.MediatR;
 using Shared.Domain.OperationResult;
 using Shared.Domain.Services.Hash;
 

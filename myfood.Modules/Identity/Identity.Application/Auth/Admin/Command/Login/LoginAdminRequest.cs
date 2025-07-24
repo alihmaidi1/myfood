@@ -1,5 +1,4 @@
-using Identity.Application.Auth.User.Command.Login;
-using Shared.Domain.CQRS;
+using Shared.Domain.MediatR;
 using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.Admin.Command.Login;
@@ -15,5 +14,5 @@ public class LoginAdminRequest
 
 public sealed class LoginAdminCommand:LoginAdminRequest, ICommand<TResult<LoginAdminResponse>>
 {
-    public Guid? RequestId { get; set; }
+
 }

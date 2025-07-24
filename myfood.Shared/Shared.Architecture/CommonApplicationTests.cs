@@ -1,10 +1,8 @@
 using System.Reflection;
-using FluentAssertions;
 using FluentValidation;
 using NetArchTest.Rules;
-using Shared.Domain.CQRS;
 using Shared.Domain.Event;
-using Shared.Domain.OperationResult;
+using Shared.Domain.MediatR;
 
 namespace Shared.Architecture;
 

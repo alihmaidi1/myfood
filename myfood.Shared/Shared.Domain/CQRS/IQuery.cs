@@ -1,6 +1,6 @@
-namespace Shared.Domain.CQRS;
-
-public interface IQuery<TResult>: IRequest<TResult>
-{
-    
-}
+// namespace Shared.Domain.CQRS;
+//
+// public interface IQuery<TResult>: IRequest<TResult>
+// {
+//     
+// }

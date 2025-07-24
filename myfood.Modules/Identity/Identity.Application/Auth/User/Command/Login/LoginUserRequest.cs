@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Http;
-using Shared.Domain.CQRS;
+using Shared.Domain.MediatR;
 using Shared.Domain.OperationResult;
 
 namespace Identity.Application.Auth.User.Command.Login;
